@@ -1,5 +1,4 @@
 import java.lang.String;
-import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -18,7 +17,8 @@ public class WKStaticSiteGenerator {
             switch(args[0]){
                 case "--version":
                 case "-v":
-                    System.out.println("wk-SSG version x.x.x, date of last version");
+                    Release release = new Release();
+                    System.out.println("wk-SSG version " + release.version + ", " + release.dateOfRelease);
                     break;
                 case "--help":
                 case "-h":
@@ -40,7 +40,6 @@ public class WKStaticSiteGenerator {
     }
 
     public static void createHTMLFile(String txtFile) throws IOException{
-        //remove /dist folder if exists
         String fileName = txtFile.split("\\.")[0];
         String pathName = "./dist/" + fileName + ".html";
 
@@ -65,13 +64,12 @@ public class WKStaticSiteGenerator {
             });
         }
 
-        //create /dist folder
         Files.createDirectories(outPath);
 
-        //set up a header 
+        FileWriter fileWriter = new FileWriter(htmlFile);
         String header = "<!doctype html>\n<html lang=\"en\">\n<head>\n\s\s<meta charset=\"utf-8\">\n\s\s<title>Filename</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n</head>\n<body>\n\s\s<p>";
+        fileWriter.write(header);
 
-        //count the line number to initialize string array, and read txt file
         int lineNumber=0;
         Scanner fileScannerToCount = new Scanner(new File(txtFile));
         while(fileScannerToCount.hasNextLine()){
@@ -87,25 +85,19 @@ public class WKStaticSiteGenerator {
             i++;
         }
 
-        //add it to html file
-        FileWriter fileWriter = new FileWriter(htmlFile);
-        fileWriter.write(header);
 
         String bodyContent = "";
         for (String line : linesFromInputFile){
             if (line.isEmpty()){
-                // fileWriter.write("</p>\n\s\s<p>");
                 bodyContent = bodyContent.substring(0, bodyContent.length()-1);
                 bodyContent += "</p>\n\s\s<p>";
             } else {
-                // fileWriter.write(line + "\n");   
                 bodyContent += line + "\n";
             }
         }
         bodyContent = bodyContent.substring(0, bodyContent.length()-1);
         fileWriter.write(bodyContent);
 
-        //add closing tags
         String closingTags = "</p>\n</body>\n</html>";
         fileWriter.write(closingTags);
         fileWriter.close();
