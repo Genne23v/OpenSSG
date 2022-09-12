@@ -22,7 +22,7 @@ public class WKStaticSiteGenerator {
                     break;
                 case "--help":
                 case "-h":
-                    System.out.println("standard help/usage message showing how to run the tool, which command line flags and arguments can be used, etc.");
+                    System.out.println("usage: " + new Release().name + " [-v | --version] [-h | --help]\n\t\t\t[-i | --input <filename>] [-o | --output <folder-name>]\n\t\t\t[-s | --stylesheet <CSS-URL>]");
                     break;
                 case "--input":
                 case "-i":
@@ -35,6 +35,7 @@ public class WKStaticSiteGenerator {
                 case "--sytlesheet":
                 case "-s":
                 //place css file in the head
+                    break;
             }
         }
     }
