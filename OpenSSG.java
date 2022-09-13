@@ -6,7 +6,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy;
 import java.io.IOException;
 
 public class OpenSSG {
