@@ -13,7 +13,9 @@ import java.util.Scanner;
 
 public class FileUtilities {
     
-    private static final String TXT = ".txt";
+    static final String TXT = ".txt";
+    static final String HTML = ".html";
+    static final String HEADER_BEFORE_TITLE = "<!doctype html>\n<html lang=\"en\">\n<head>\n\s\s<meta charset=\"utf-8\">\n\s\s<title>";
 
     public ArrayList<String> getAllTxtFiles(String inputArg) throws IOException{
         ArrayList<String> fileNames = new ArrayList<String>();
@@ -36,9 +38,8 @@ public class FileUtilities {
         return fileNames;
     }
 
-    public void removeDistFolder() throws IOException{
-        Path outPath = Paths.get("./dist");
-
+    public void removeExistingFolder(String folderName) throws IOException{
+        Path outPath = Paths.get(folderName);
         Files.walkFileTree(outPath, new SimpleFileVisitor<Path>(){
            @Override
            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException{
@@ -57,19 +58,16 @@ public class FileUtilities {
     }
 
     public void generateHTMLFiles(ArrayList<String> txtFiles) throws IOException{
-        String headerBeforeTitle = "<!doctype html>\n<html lang=\"en\">\n<head>\n\s\s<meta charset=\"utf-8\">\n\s\s<title>";
         String headerAfterTitle = "</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n</head>\n<body>";
 
         for (String file : txtFiles){
-            Path path = Paths.get("./dist" + file.substring(1));
-            String newDirectory = path.getParent().toString();
-            Files.createDirectories(Paths.get(newDirectory)); 
-
-            String newHtmlFilename = "./dist/" + file.substring(2, file.length()-4) + ".html";
+            createSubDirectory(OpenSSG.DIST_FOLDER, file);
+            
+            String newHtmlFilename = OpenSSG.DIST_FOLDER + file.substring(1, file.length()-4) + HTML;
             File htmlFile = new File(newHtmlFilename);
             FileWriter fileWriter = new FileWriter(htmlFile);
 
-            fileWriter.write(headerBeforeTitle);
+            fileWriter.write(HEADER_BEFORE_TITLE);
 
             String[] linesFromInputFile = readTxtFile(file);
             String[] linesAfterCheckingTitle;
@@ -81,7 +79,7 @@ public class FileUtilities {
                 linesAfterCheckingTitle = new String[linesFromInputFile.length-4];
                 System.arraycopy(linesFromInputFile, 4, linesAfterCheckingTitle, 0, linesFromInputFile.length-4);
             } else {
-                fileWriter.write(path.getFileName().toString() + headerAfterTitle);
+                fileWriter.write(Paths.get(OpenSSG.DIST_FOLDER + file.substring(1)).getFileName().toString() + headerAfterTitle);
                 linesAfterCheckingTitle = linesFromInputFile;
             }
             fileWriter.write("\n\s\s<p>");
@@ -102,6 +100,67 @@ public class FileUtilities {
             fileWriter.write(closingTags);
             fileWriter.close();
         }
+    }
+
+    public void generateHTMLFiles(ArrayList<String> input, String output, ArrayList<String> stylesheetLinks) throws IOException{
+        String headerAfterTitle = "</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
+
+        for (String file : input){
+            createSubDirectory(output, file);
+
+            String newHtmlFilename = output + file.substring(1, file.length()-4) + HTML;
+            File htmlFile = new File(newHtmlFilename);
+            FileWriter fileWriter = new FileWriter(htmlFile);
+
+            fileWriter.write(HEADER_BEFORE_TITLE);
+
+            String[] linesFromInputFile = readTxtFile(file);
+            String[] linesAfterCheckingTitle;
+
+            if (hasTitle(linesFromInputFile)){
+                String title = linesFromInputFile[2];
+                fileWriter.write(title + headerAfterTitle + getCssLinks(stylesheetLinks) + "</head>\n<body>");
+                fileWriter.write("\n\s\s<h1>" + title + "</h1>");
+                linesAfterCheckingTitle = new String[linesFromInputFile.length-4];
+                System.arraycopy(linesFromInputFile, 4, linesAfterCheckingTitle, 0, linesFromInputFile.length-4);
+            } else {
+                fileWriter.write(Paths.get(output + file.substring(1)).getFileName().toString() + headerAfterTitle + getCssLinks(stylesheetLinks) + "</head>\n<body>");
+                linesAfterCheckingTitle = linesFromInputFile;
+            }
+            fileWriter.write("\n\s\s<p>");
+            
+            String bodyContent = "";
+            for (String line : linesAfterCheckingTitle){
+                if (line.isEmpty() && !bodyContent.isEmpty()){
+                    bodyContent = bodyContent.substring(0, bodyContent.length()-1);
+                    bodyContent += "</p>\n\s\s<p>";
+                } else {
+                    bodyContent += line + "\n";
+                }
+            }
+            bodyContent = bodyContent.substring(0, bodyContent.length()-1);
+            fileWriter.write(bodyContent);
+    
+            String closingTags = "</p>\n</body>\n</html>";
+            fileWriter.write(closingTags);
+            fileWriter.close();
+        }
+    }
+
+    public String getCssLinks(ArrayList<String> stylesheetLinks){
+        String cssLinks = ""; 
+
+        for (String link : stylesheetLinks){
+            cssLinks += ("\s\s<link rel=\"stylesheet\" href=\"" + link + "\">\n");
+        }
+
+        return cssLinks;
+    }
+
+    public void createSubDirectory(String output, String filename) throws IOException{
+        Path path = Paths.get(output + filename.substring(1));
+        String newDirectory = path.getParent().toString();
+        Files.createDirectories(Paths.get(newDirectory));
     }
 
     public String[] readTxtFile(String file) throws FileNotFoundException{
@@ -127,13 +186,5 @@ public class FileUtilities {
 
     public boolean hasTitle(String[] linesFromFile){
         return linesFromFile[0].isEmpty() && linesFromFile[1].isEmpty();
-    }
-
-    public void createHTMLFiles(String input, String output, ArrayList<String> stylesheetLinks){
-
-    }
-
-    public void createHTMLFiles(ArrayList<String> fileNames){
-
     }
 }

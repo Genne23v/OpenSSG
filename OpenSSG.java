@@ -1,23 +1,18 @@
 import java.lang.String;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.Scanner;
-import java.io.File;
-import java.io.FileWriter;
+import java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy;
 import java.io.IOException;
 
 public class OpenSSG {
 
-    private static final String DIST_FOLDER = "./dist";
+    static final String DIST_FOLDER = "./dist";
+    private static final String OPTION_DESCRIPTION = " [-v | --version] [-h | --help]\n\t\t\t[-i | --input <filename>] [-o | --output <folder-name>]\n\t\t\t[-s | --stylesheet <CSS-URL>]";
 
     public static void main(String[] args) throws IOException{
         if (args.length > 0){
@@ -25,16 +20,18 @@ public class OpenSSG {
                 case "--version":
                 case "-v":
                     Release release = new Release();
-                    System.out.println("wk-SSG version " + release.version + ", " + release.dateOfRelease);
+                    System.out.println("Open-SSG version " + release.version + ", " + release.dateOfRelease);
                     break;
                 case "--help":
                 case "-h":
-                    System.out.println("usage: " + new Release().name + " [-v | --version] [-h | --help]\n\t\t\t[-i | --input <filename>] [-o | --output <folder-name>]\n\t\t\t[-s | --stylesheet <CSS-URL>]");
+                    System.out.println("usage: " + new Release().name + OPTION_DESCRIPTION);
                     break;
                 default:
                     var optionArgs = analyzeArgs(args);
                     sortOptionAndCreateFiles(optionArgs);
             }
+        } else {
+            System.out.println("Please provide an option. You can check usage by running OpenSSG -h or OpenSSG --help.");
         }
     }
 
@@ -65,12 +62,14 @@ public class OpenSSG {
 
         if (optionArgs.get("-o") != null && optionArgs.get("-s") != null){
             String outputOption = (String) optionArgs.get("-o");
+            @SuppressWarnings("unchecked") 
             ArrayList<String> stylesheetOption = (ArrayList<String>) optionArgs.get("-s");
 
             createHTMLFiles(inputOption, outputOption, stylesheetOption);
 
         } else if (optionArgs.get("-o") == null && optionArgs.get("-s") != null){
-            String outputOption = "./dist";
+            String outputOption = DIST_FOLDER;
+            @SuppressWarnings("unchecked") 
             ArrayList<String> stylesheetOption = (ArrayList<String>) optionArgs.get("-s");
 
             createHTMLFiles(inputOption, outputOption, stylesheetOption);
@@ -87,7 +86,7 @@ public class OpenSSG {
 
         Path outPath = Paths.get(DIST_FOLDER);
         if (Files.exists(outPath, new LinkOption[]{LinkOption.NOFOLLOW_LINKS})){
-            fileUtilities.removeDistFolder();
+            fileUtilities.removeExistingFolder(DIST_FOLDER);
         }
         
         Files.createDirectories(outPath);
@@ -99,16 +98,15 @@ public class OpenSSG {
 
     public static void createHTMLFiles(String input, String output, ArrayList<String> stylesheetLinks) throws IOException{
         FileUtilities fileUtilities = new FileUtilities();
-
-        ArrayList<String> txtFiles = fileUtilities.getAllTxtFiles(input);
         
         Path outPath = Paths.get(output);
         if (Files.exists(outPath, new LinkOption[]{LinkOption.NOFOLLOW_LINKS})){
-            fileUtilities.removeDistFolder();
+            fileUtilities.removeExistingFolder(output);
         }
         
         Files.createDirectories(outPath);
-
-        fileUtilities.generateHTMLFiles(txtFiles);  
+        
+        ArrayList<String> txtFiles = fileUtilities.getAllTxtFiles(input);
+        fileUtilities.generateHTMLFiles(txtFiles, output, stylesheetLinks);  
     }
 }
