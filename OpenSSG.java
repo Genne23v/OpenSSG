@@ -58,21 +58,26 @@ public class OpenSSG {
 
     public static void sortOptionAndCreateFiles(Dictionary<String, Object> optionArgs) throws IOException{
         String inputOption = (String) optionArgs.get("-i");
+        String outputOption = "";
 
         if (optionArgs.get("-o") != null && optionArgs.get("-s") != null){
-            String outputOption = (String) optionArgs.get("-o");
+            outputOption = (String) optionArgs.get("-o");
             @SuppressWarnings("unchecked") 
             ArrayList<String> stylesheetOption = (ArrayList<String>) optionArgs.get("-s");
 
             createHTMLFiles(inputOption, outputOption, stylesheetOption);
 
         } else if (optionArgs.get("-o") == null && optionArgs.get("-s") != null){
-            String outputOption = DIST_FOLDER;
+            outputOption = DIST_FOLDER;
             @SuppressWarnings("unchecked") 
             ArrayList<String> stylesheetOption = (ArrayList<String>) optionArgs.get("-s");
 
             createHTMLFiles(inputOption, outputOption, stylesheetOption);
 
+        } else if (optionArgs.get("-o") != null && optionArgs.get("-s") == null){
+            outputOption = (String) optionArgs.get("-o");
+
+            createHTMLFiles(inputOption, outputOption);
         } else if (optionArgs.get("-o") == null && optionArgs.get("-s") == null){
 
             createHTMLFiles(inputOption);
@@ -92,8 +97,21 @@ public class OpenSSG {
         
         ArrayList<String> txtFiles = fileUtilities.getAllTxtFiles(inputArg);
         fileUtilities.generateHTMLFiles(txtFiles);
-
     };
+
+    public static void createHTMLFiles(String input, String output) throws IOException{
+        FileUtilities fileUtilities = new FileUtilities();
+
+        Path outPath = Paths.get(output);
+        if (Files.exists(outPath, new LinkOption[]{LinkOption.NOFOLLOW_LINKS})){
+            fileUtilities.removeExistingFolder(output);
+        }
+        
+        Files.createDirectories(outPath);
+        
+        ArrayList<String> txtFiles = fileUtilities.getAllTxtFiles(input);
+        fileUtilities.generateHTMLFiles(txtFiles, output);
+    }
 
     public static void createHTMLFiles(String input, String output, ArrayList<String> stylesheetLinks) throws IOException{
         FileUtilities fileUtilities = new FileUtilities();

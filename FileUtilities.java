@@ -63,7 +63,7 @@ public class FileUtilities {
         for (String file : txtFiles){
             createSubDirectory(OpenSSG.DIST_FOLDER, file);
             
-            String newHtmlFilename = OpenSSG.DIST_FOLDER + file.substring(1, file.length()-4) + HTML;
+            String newHtmlFilename = OpenSSG.DIST_FOLDER + trimFilename(file) + HTML;
             File htmlFile = new File(newHtmlFilename);
             FileWriter fileWriter = new FileWriter(htmlFile);
 
@@ -79,7 +79,52 @@ public class FileUtilities {
                 linesAfterCheckingTitle = new String[linesFromInputFile.length-4];
                 System.arraycopy(linesFromInputFile, 4, linesAfterCheckingTitle, 0, linesFromInputFile.length-4);
             } else {
-                fileWriter.write(Paths.get(OpenSSG.DIST_FOLDER + file.substring(1)).getFileName().toString() + headerAfterTitle);
+                fileWriter.write(Paths.get(file).getFileName().toString() + headerAfterTitle);
+                linesAfterCheckingTitle = linesFromInputFile;
+            }
+            fileWriter.write("\n\s\s<p>");
+            
+            String bodyContent = "";
+            for (String line : linesAfterCheckingTitle){
+                if (line.isEmpty() && !bodyContent.isEmpty()){
+                    bodyContent = bodyContent.substring(0, bodyContent.length()-1);
+                    bodyContent += "</p>\n\s\s<p>";
+                } else {
+                    bodyContent += line + "\n";
+                }
+            }
+            bodyContent = bodyContent.substring(0, bodyContent.length()-1);
+            fileWriter.write(bodyContent);
+    
+            String closingTags = "</p>\n</body>\n</html>";
+            fileWriter.write(closingTags);
+            fileWriter.close();
+        }
+    }
+
+    public void generateHTMLFiles(ArrayList<String> txtFiles, String output) throws IOException{
+        String headerAfterTitle = "</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n</head>\n<body>";
+
+        for (String file : txtFiles){
+            createSubDirectory(output, file);
+            
+            String newHtmlFilename = output + trimFilename(file) + HTML;
+            File htmlFile = new File(newHtmlFilename);
+            FileWriter fileWriter = new FileWriter(htmlFile);
+
+            fileWriter.write(HEADER_BEFORE_TITLE);
+
+            String[] linesFromInputFile = readTxtFile(file);
+            String[] linesAfterCheckingTitle;
+            
+            if (hasTitle(linesFromInputFile)){
+                String title = linesFromInputFile[2];
+                fileWriter.write(title + headerAfterTitle);
+                fileWriter.write("\n\s\s<h1>" + title + "</h1>");
+                linesAfterCheckingTitle = new String[linesFromInputFile.length-4];
+                System.arraycopy(linesFromInputFile, 4, linesAfterCheckingTitle, 0, linesFromInputFile.length-4);
+            } else {
+                fileWriter.write(Paths.get(file).getFileName().toString() + headerAfterTitle);
                 linesAfterCheckingTitle = linesFromInputFile;
             }
             fileWriter.write("\n\s\s<p>");
@@ -108,7 +153,7 @@ public class FileUtilities {
         for (String file : input){
             createSubDirectory(output, file);
 
-            String newHtmlFilename = output + file.substring(1, file.length()-4) + HTML;
+            String newHtmlFilename = output + trimFilename(file) + HTML;
             File htmlFile = new File(newHtmlFilename);
             FileWriter fileWriter = new FileWriter(htmlFile);
 
@@ -146,6 +191,19 @@ public class FileUtilities {
             fileWriter.close();
         }
     }
+
+    public String trimFilename(String filename){
+        String trimmedFilename = "";
+
+        if (filename.startsWith(("./"))){
+            trimmedFilename = filename.substring(1, filename.length()-4);
+        } else {
+            trimmedFilename = "/" + filename.substring(0, filename.length()-4);
+        }
+
+        return trimmedFilename;
+    }
+
 
     public String getCssLinks(ArrayList<String> stylesheetLinks){
         String cssLinks = ""; 

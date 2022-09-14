@@ -15,9 +15,9 @@ Run `OpenSSG -h` or `OpenSSG --help` to find the usage and how to use options
 
 
 ## Release
-| Version | 0.2.0         |
+| Version | 0.1.0         |
 |---------|---------------|
-| Date    | Sep, 13, 2022 |
+| Date    | Sep, 11, 2022 |
 
 
 ## License
