@@ -19,6 +19,7 @@ public class FileUtilities {
     static final String HEADER_AFTER_TITLE = "</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n</head>\n<body>";
     static final String HEADER_AFTER_TITLE_WITHOUT_CLOSING_TAG =  "</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
     static final String BODY_CLOSING_TAGS = "</p>\n</body>\n</html>";
+    static final String CSS_LINKS = "\s\s<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/tufte.min.css\">\n\s\s<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/water.css@2/out/water.css\">";
 
     public ArrayList<String> getAllTxtFiles(String inputArg) throws IOException{
         ArrayList<String> fileNames = new ArrayList<String>();
@@ -195,15 +196,15 @@ public class FileUtilities {
         File indexFile = new File(output + "/index.html");
         FileWriter fileWriter = new FileWriter(indexFile);
 
-        fileWriter.write(HEADER_BEFORE_TITLE + "Index Page" + HEADER_AFTER_TITLE);
+        fileWriter.write(HEADER_BEFORE_TITLE + "Index Page" + HEADER_AFTER_TITLE_WITHOUT_CLOSING_TAG + CSS_LINKS + "\n</head>\n<body>\n\s\s<ul>");
 
         for (String file : txtFiles){
             String linkOfFile = file.substring(0, file.length()-4);
             String titleOfLink = Paths.get(file).getFileName().toString().split("\\.")[0];
-            fileWriter.write("\n\s\s<a href=\"" + linkOfFile + HTML + "\">" + titleOfLink + "</a>");
+            fileWriter.write("\n\s\s\s\s<li><a href=\"" + linkOfFile + HTML + "\">" + titleOfLink + "</a></li>");
         }
 
-        fileWriter.write("\n</body></html>");
+        fileWriter.write("\n\s\s</ul>\n</body>\n</html>");
         fileWriter.close();
     }
 
