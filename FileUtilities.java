@@ -16,6 +16,9 @@ public class FileUtilities {
     static final String TXT = ".txt";
     static final String HTML = ".html";
     static final String HEADER_BEFORE_TITLE = "<!doctype html>\n<html lang=\"en\">\n<head>\n\s\s<meta charset=\"utf-8\">\n\s\s<title>";
+    static final String HEADER_AFTER_TITLE = "</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n</head>\n<body>";
+    static final String HEADER_AFTER_TITLE_WITHOUT_CLOSING_TAG =  "</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
+    static final String BODY_CLOSING_TAGS = "</p>\n</body>\n</html>";
 
     public ArrayList<String> getAllTxtFiles(String inputArg) throws IOException{
         ArrayList<String> fileNames = new ArrayList<String>();
@@ -58,8 +61,7 @@ public class FileUtilities {
     }
 
     public void generateHTMLFiles(ArrayList<String> txtFiles) throws IOException{
-        String headerAfterTitle = "</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n</head>\n<body>";
-
+        
         for (String file : txtFiles){
             createSubDirectory(OpenSSG.DIST_FOLDER, file);
             
@@ -73,13 +75,13 @@ public class FileUtilities {
             String[] linesAfterCheckingTitle;
             
             if (hasTitle(linesFromInputFile)){
-                String title = linesFromInputFile[2];
-                fileWriter.write(title + headerAfterTitle);
+                String title = linesFromInputFile[0];
+                fileWriter.write(title + HEADER_AFTER_TITLE);
                 fileWriter.write("\n\s\s<h1>" + title + "</h1>");
                 linesAfterCheckingTitle = new String[linesFromInputFile.length-4];
                 System.arraycopy(linesFromInputFile, 4, linesAfterCheckingTitle, 0, linesFromInputFile.length-4);
             } else {
-                fileWriter.write(Paths.get(file).getFileName().toString() + headerAfterTitle);
+                fileWriter.write(Paths.get(file).getFileName().toString() + HEADER_AFTER_TITLE);
                 linesAfterCheckingTitle = linesFromInputFile;
             }
             fileWriter.write("\n\s\s<p>");
@@ -96,15 +98,13 @@ public class FileUtilities {
             bodyContent = bodyContent.substring(0, bodyContent.length()-1);
             fileWriter.write(bodyContent);
     
-            String closingTags = "</p>\n</body>\n</html>";
-            fileWriter.write(closingTags);
+            fileWriter.write(BODY_CLOSING_TAGS);
             fileWriter.close();
         }
     }
 
     public void generateHTMLFiles(ArrayList<String> txtFiles, String output) throws IOException{
-        String headerAfterTitle = "</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n</head>\n<body>";
-
+        
         for (String file : txtFiles){
             createSubDirectory(output, file);
             
@@ -118,13 +118,13 @@ public class FileUtilities {
             String[] linesAfterCheckingTitle;
             
             if (hasTitle(linesFromInputFile)){
-                String title = linesFromInputFile[2];
-                fileWriter.write(title + headerAfterTitle);
+                String title = linesFromInputFile[0];
+                fileWriter.write(title + HEADER_AFTER_TITLE);
                 fileWriter.write("\n\s\s<h1>" + title + "</h1>");
                 linesAfterCheckingTitle = new String[linesFromInputFile.length-4];
                 System.arraycopy(linesFromInputFile, 4, linesAfterCheckingTitle, 0, linesFromInputFile.length-4);
             } else {
-                fileWriter.write(Paths.get(file).getFileName().toString() + headerAfterTitle);
+                fileWriter.write(Paths.get(file).getFileName().toString() + HEADER_AFTER_TITLE);
                 linesAfterCheckingTitle = linesFromInputFile;
             }
             fileWriter.write("\n\s\s<p>");
@@ -141,15 +141,14 @@ public class FileUtilities {
             bodyContent = bodyContent.substring(0, bodyContent.length()-1);
             fileWriter.write(bodyContent);
     
-            String closingTags = "</p>\n</body>\n</html>";
-            fileWriter.write(closingTags);
+            fileWriter.write(BODY_CLOSING_TAGS);
             fileWriter.close();
         }
+        createIndexFile(output, txtFiles);
     }
 
     public void generateHTMLFiles(ArrayList<String> input, String output, ArrayList<String> stylesheetLinks) throws IOException{
-        String headerAfterTitle = "</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
-
+        
         for (String file : input){
             createSubDirectory(output, file);
 
@@ -163,13 +162,13 @@ public class FileUtilities {
             String[] linesAfterCheckingTitle;
 
             if (hasTitle(linesFromInputFile)){
-                String title = linesFromInputFile[2];
-                fileWriter.write(title + headerAfterTitle + getCssLinks(stylesheetLinks) + "</head>\n<body>");
+                String title = linesFromInputFile[0];
+                fileWriter.write(title + HEADER_AFTER_TITLE_WITHOUT_CLOSING_TAG + getCssLinks(stylesheetLinks) + "</head>\n<body>");
                 fileWriter.write("\n\s\s<h1>" + title + "</h1>");
                 linesAfterCheckingTitle = new String[linesFromInputFile.length-4];
                 System.arraycopy(linesFromInputFile, 4, linesAfterCheckingTitle, 0, linesFromInputFile.length-4);
             } else {
-                fileWriter.write(Paths.get(output + file.substring(1)).getFileName().toString() + headerAfterTitle + getCssLinks(stylesheetLinks) + "</head>\n<body>");
+                fileWriter.write(Paths.get(output + file.substring(1)).getFileName().toString() + HEADER_AFTER_TITLE_WITHOUT_CLOSING_TAG + getCssLinks(stylesheetLinks) + "</head>\n<body>");
                 linesAfterCheckingTitle = linesFromInputFile;
             }
             fileWriter.write("\n\s\s<p>");
@@ -186,10 +185,26 @@ public class FileUtilities {
             bodyContent = bodyContent.substring(0, bodyContent.length()-1);
             fileWriter.write(bodyContent);
     
-            String closingTags = "</p>\n</body>\n</html>";
-            fileWriter.write(closingTags);
+            fileWriter.write(BODY_CLOSING_TAGS);
             fileWriter.close();
         }
+        createIndexFile(output, input);
+    }
+
+    public void createIndexFile(String output, ArrayList<String> txtFiles) throws IOException{
+        File indexFile = new File(output + "/index.html");
+        FileWriter fileWriter = new FileWriter(indexFile);
+
+        fileWriter.write(HEADER_BEFORE_TITLE + "Index Page" + HEADER_AFTER_TITLE);
+
+        for (String file : txtFiles){
+            String linkOfFile = file.substring(0, file.length()-4);
+            String titleOfLink = Paths.get(file).getFileName().toString().split("\\.")[0];
+            fileWriter.write("\n\s\s<a href=\"" + linkOfFile + HTML + "\">" + titleOfLink + "</a>");
+        }
+
+        fileWriter.write("\n</body></html>");
+        fileWriter.close();
     }
 
     public String trimFilename(String filename){
@@ -200,7 +215,6 @@ public class FileUtilities {
         } else {
             trimmedFilename = "/" + filename.substring(0, filename.length()-4);
         }
-
         return trimmedFilename;
     }
 
@@ -211,7 +225,6 @@ public class FileUtilities {
         for (String link : stylesheetLinks){
             cssLinks += ("\s\s<link rel=\"stylesheet\" href=\"" + link + "\">\n");
         }
-
         return cssLinks;
     }
 
@@ -243,6 +256,6 @@ public class FileUtilities {
     }
 
     public boolean hasTitle(String[] linesFromFile){
-        return linesFromFile[0].isEmpty() && linesFromFile[1].isEmpty();
+        return linesFromFile[1].isEmpty() && linesFromFile[2].isEmpty();
     }
 }
