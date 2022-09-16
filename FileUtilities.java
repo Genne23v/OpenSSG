@@ -79,8 +79,8 @@ public class FileUtilities {
                 String title = linesFromInputFile[0];
                 fileWriter.write(title + HEADER_AFTER_TITLE);
                 fileWriter.write("\n\s\s<h1>" + title + "</h1>");
-                linesAfterCheckingTitle = new String[linesFromInputFile.length-4];
-                System.arraycopy(linesFromInputFile, 4, linesAfterCheckingTitle, 0, linesFromInputFile.length-4);
+                linesAfterCheckingTitle = new String[linesFromInputFile.length-3];
+                System.arraycopy(linesFromInputFile, 3, linesAfterCheckingTitle, 0, linesFromInputFile.length-3);
             } else {
                 fileWriter.write(Paths.get(file).getFileName().toString() + HEADER_AFTER_TITLE);
                 linesAfterCheckingTitle = linesFromInputFile;
