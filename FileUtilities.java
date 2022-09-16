@@ -209,8 +209,9 @@ public class FileUtilities {
 
         for (String file : txtFiles){
             String linkOfFile = file.substring(0, file.length()-4);
+            String encodedLink = linkOfFile.replaceAll(" ", "%20");
             String titleOfLink = Paths.get(file).getFileName().toString().split("\\.")[0];
-            fileWriter.write("\n\s\s\s\s<li><a href=\"" + linkOfFile + HTML + "\">" + titleOfLink + "</a></li>");
+            fileWriter.write("\n\s\s\s\s<li><a href=\"" + encodedLink + HTML + "\">" + titleOfLink + "</a></li>");
         }
 
         fileWriter.write("\n\s\s</ul>\n</body>\n</html>");
