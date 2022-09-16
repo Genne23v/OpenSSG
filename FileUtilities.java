@@ -30,8 +30,11 @@ public class FileUtilities {
             Files.walkFileTree(path, new SimpleFileVisitor<Path>(){
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs){
-                    System.out.println(file.toString());
-                    fileNames.add(file.toString());
+                    System.out.println("Found " + file.toString());
+
+                    if (file.toString().endsWith(".txt")){
+                        fileNames.add(file.toString());
+                    }
                     return FileVisitResult.CONTINUE;
                 }
             });
@@ -101,6 +104,8 @@ public class FileUtilities {
     
             fileWriter.write(BODY_CLOSING_TAGS);
             fileWriter.close();
+
+            System.out.println(newHtmlFilename.toString() + " has been created");
         }
     }
 
@@ -144,6 +149,8 @@ public class FileUtilities {
     
             fileWriter.write(BODY_CLOSING_TAGS);
             fileWriter.close();
+
+            System.out.println(newHtmlFilename.toString() + " has been created");
         }
         createIndexFile(output, txtFiles);
     }
@@ -188,6 +195,8 @@ public class FileUtilities {
     
             fileWriter.write(BODY_CLOSING_TAGS);
             fileWriter.close();
+
+            System.out.println(newHtmlFilename.toString() + " has been created");
         }
         createIndexFile(output, input);
     }
@@ -206,6 +215,8 @@ public class FileUtilities {
 
         fileWriter.write("\n\s\s</ul>\n</body>\n</html>");
         fileWriter.close();
+
+        System.out.println("index.html has been created");
     }
 
     public String trimFilename(String filename){

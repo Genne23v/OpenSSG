@@ -11,7 +11,7 @@ import java.io.IOException;
 public class OpenSSG {
 
     static final String DIST_FOLDER = "./dist";
-    private static final String OPTION_DESCRIPTION = " [-v | --version] [-h | --help]\n\t\t\t[-i | --input <filename>] [-o | --output <folder-name>]\n\t\t\t[-s | --stylesheet <CSS-URL>]";
+    private static final String OPTION_DESCRIPTION = " [-v | --version] [-h | --help]\n\t\t[-i | --input <file-or-folder>] [-o | --output <folder-name>]\n\t\t[-s | --stylesheet <CSS-URL>]";
 
     public static void main(String[] args) throws IOException{
         if (args.length > 0){
@@ -19,7 +19,7 @@ public class OpenSSG {
                 case "--version":
                 case "-v":
                     Release release = new Release();
-                    System.out.println("Open-SSG version " + release.version + ", " + release.dateOfRelease);
+                    System.out.println("OpenSSG version " + release.version + ", " + release.dateOfRelease);
                     break;
                 case "--help":
                 case "-h":
