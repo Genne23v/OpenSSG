@@ -11,7 +11,7 @@ import java.io.IOException;
 public class OpenSSG {
 
     static final String DIST_FOLDER = "./dist";
-    private static final String OPTION_DESCRIPTION = " [-v | --version] [-h | --help]\n\t\t[-i | --input <file-or-folder>] [-o | --output <folder-name>]\n\t\t[-s | --stylesheet <CSS-URL>]";
+    private static final String OPTION_DESCRIPTION = "\nAvailable options:\n[-v | --version]\t\t\tDisplay program information\n[-h | --help]\t\t\t\tDisplay how to use options\n[-i | --input <file-or-folder>]\t\tSpecify input file or folder\n[-o | --output <folder-name>]\t\tSpecify output folder. Default is ./dist\n[-s | --stylesheet <CSS-URL>]\t\tAdd CSS links to each of the html file";
 
     public static void main(String[] args) throws IOException{
         if (args.length > 0){
@@ -23,7 +23,7 @@ public class OpenSSG {
                     break;
                 case "--help":
                 case "-h":
-                    System.out.println("usage: " + new Release().name + OPTION_DESCRIPTION);
+                    System.out.println("usage: " + new Release().name + " <option>\n" + OPTION_DESCRIPTION);
                     break;
                 default:
                     var optionArgs = analyzeArgs(args);
