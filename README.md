@@ -25,6 +25,7 @@ https://genne23v.github.io/sherlock-homes-selected-stories/
 |---------|---------------|
 | 0.1.0   | Sep, 11, 2022 |
 | 0.1.1   | Sep, 16, 2022 |
+| 0.1.2   | Sep, 18, 2022 |
 
 
 ## License
