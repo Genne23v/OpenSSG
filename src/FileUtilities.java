@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.LinkOption;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,6 +16,7 @@ public class FileUtilities {
     
     static final String TXT = ".txt";
     static final String HTML = ".html";
+    static final String DIST_FOLDER = "./dist";
     static final String HEADER_BEFORE_TITLE = "<!doctype html>\n<html lang=\"en\">\n<head>\n\s\s<meta charset=\"utf-8\">\n\s\s<title>";
     static final String HEADER_AFTER_TITLE = "</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n</head>\n<body>";
     static final String HEADER_AFTER_TITLE_WITHOUT_CLOSING_TAG =  "</title>\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
@@ -67,9 +69,9 @@ public class FileUtilities {
     public void generateHTMLFiles(ArrayList<String> txtFiles) throws IOException{
         
         for (String file : txtFiles){
-            createSubDirectory(OpenSSG.DIST_FOLDER, file);
+            createSubDirectory(DIST_FOLDER, file);
             
-            String newHtmlFilename = OpenSSG.DIST_FOLDER + trimFilename(file) + HTML;
+            String newHtmlFilename = DIST_FOLDER + trimFilename(file) + HTML;
             File htmlFile = new File(newHtmlFilename);
             FileWriter fileWriter = new FileWriter(htmlFile);
 
@@ -270,5 +272,48 @@ public class FileUtilities {
 
     public boolean hasTitle(String[] linesFromFile){
         return linesFromFile[1].isEmpty() && linesFromFile[2].isEmpty();
+    }
+
+    public void createHTMLFiles(String inputArg) throws IOException {
+        FileUtilities fileUtilities = new FileUtilities();
+
+        Path outPath = Paths.get(DIST_FOLDER);
+        if (Files.exists(outPath, new LinkOption[] { LinkOption.NOFOLLOW_LINKS })) {
+            fileUtilities.removeExistingFolder(DIST_FOLDER);
+        }
+
+        Files.createDirectories(outPath);
+
+        ArrayList<String> txtFiles = fileUtilities.getAllTxtFiles(inputArg);
+        fileUtilities.generateHTMLFiles(txtFiles);
+    };
+
+    public void createHTMLFiles(String input, String output) throws IOException {
+        FileUtilities fileUtilities = new FileUtilities();
+
+        Path outPath = Paths.get(output);
+        if (Files.exists(outPath, new LinkOption[] { LinkOption.NOFOLLOW_LINKS })) {
+            fileUtilities.removeExistingFolder(output);
+        }
+
+        Files.createDirectories(outPath);
+
+        ArrayList<String> txtFiles = fileUtilities.getAllTxtFiles(input);
+        fileUtilities.generateHTMLFiles(txtFiles, output);
+    }
+
+    public void createHTMLFiles(String input, String output, ArrayList<String> stylesheetLinks)
+            throws IOException {
+        FileUtilities fileUtilities = new FileUtilities();
+
+        Path outPath = Paths.get(output);
+        if (Files.exists(outPath, new LinkOption[] { LinkOption.NOFOLLOW_LINKS })) {
+            fileUtilities.removeExistingFolder(output);
+        }
+
+        Files.createDirectories(outPath);
+
+        ArrayList<String> txtFiles = fileUtilities.getAllTxtFiles(input);
+        fileUtilities.generateHTMLFiles(txtFiles, output, stylesheetLinks);
     }
 }

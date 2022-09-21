@@ -1,8 +1,4 @@
 import java.lang.String;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
@@ -10,8 +6,6 @@ import java.util.Hashtable;
 import java.io.IOException;
 
 public class OpenSSG {
-
-    static final String DIST_FOLDER = "./dist";
     private static final String OPTION_DESCRIPTION = "\nAvailable options:\n[-v | --version]\t\t\tDisplay program information\n[-h | --help]\t\t\t\tDisplay how to use options\n[-i | --input <file-or-folder>]\t\tSpecify input file or folder\n[-o | --output <folder-name>]\t\tSpecify output folder. Default is ./dist\n[-s | --stylesheet <CSS-URL>]\t\tAdd CSS links to each of the html file";
 
     public static void main(String[] args) throws IOException {
@@ -57,13 +51,19 @@ public class OpenSSG {
 
     public static boolean areArgsValid(String[] args) {
         boolean isValid = true;
+        String[] basicOptions = { "-v", "--version", "-h", "--help" };
         String[] singleArgOptions = { "-i", "--input", "-o", "--output" };
         String[] stylesheetOptions = { "-s", "--stylesheet" };
 
         if (args.length > 0) {
-            if (!(Arrays.asList(args).contains("-i") || Arrays.asList(args).contains("-input"))){
+            if (Arrays.asList(basicOptions).contains(args[0])){
+                if (args.length > 1){
+                    System.out.println("Cannot process other option or argument. Check the usage by running java OpenSSG -h or --help.");    
+                    isValid = false;
+                }
+            } else if (!(Arrays.asList(args).contains("-i") || Arrays.asList(args).contains("-input"))){
                 isValid = false;
-                System.out.println("Input option must be provided with arguement");
+                System.out.println("Input option must be provided with <File> or <Folder> argument. Check the usage by running java OpenSSG -h or --help.");
             } else {
                 for (int i = 0; i < args.length; i++) {
                     if (Arrays.asList(singleArgOptions).contains(args[i])) {
@@ -99,72 +99,30 @@ public class OpenSSG {
     public static void sortOptionAndCreateFiles(Dictionary<String, Object> optionArgs) throws IOException {
         String inputOption = (String) optionArgs.get("-i");
         String outputOption = "";
+        FileUtilities fileUtil = new FileUtilities();
 
         if (optionArgs.get("-o") != null && optionArgs.get("-s") != null) {
             outputOption = (String) optionArgs.get("-o");
             @SuppressWarnings("unchecked")
             ArrayList<String> stylesheetOption = (ArrayList<String>) optionArgs.get("-s");
 
-            createHTMLFiles(inputOption, outputOption, stylesheetOption);
+            fileUtil.createHTMLFiles(inputOption, outputOption, stylesheetOption);
 
         } else if (optionArgs.get("-o") == null && optionArgs.get("-s") != null) {
-            outputOption = DIST_FOLDER;
+            outputOption = FileUtilities.DIST_FOLDER;
             @SuppressWarnings("unchecked")
             ArrayList<String> stylesheetOption = (ArrayList<String>) optionArgs.get("-s");
 
-            createHTMLFiles(inputOption, outputOption, stylesheetOption);
+            fileUtil.createHTMLFiles(inputOption, outputOption, stylesheetOption);
 
         } else if (optionArgs.get("-o") != null && optionArgs.get("-s") == null) {
             outputOption = (String) optionArgs.get("-o");
 
-            createHTMLFiles(inputOption, outputOption);
+            fileUtil.createHTMLFiles(inputOption, outputOption);
         } else if (optionArgs.get("-o") == null && optionArgs.get("-s") == null) {
 
-            createHTMLFiles(inputOption);
+            fileUtil.createHTMLFiles(inputOption);
 
         }
-    }
-
-    public static void createHTMLFiles(String inputArg) throws IOException {
-        FileUtilities fileUtilities = new FileUtilities();
-
-        Path outPath = Paths.get(DIST_FOLDER);
-        if (Files.exists(outPath, new LinkOption[] { LinkOption.NOFOLLOW_LINKS })) {
-            fileUtilities.removeExistingFolder(DIST_FOLDER);
-        }
-
-        Files.createDirectories(outPath);
-
-        ArrayList<String> txtFiles = fileUtilities.getAllTxtFiles(inputArg);
-        fileUtilities.generateHTMLFiles(txtFiles);
-    };
-
-    public static void createHTMLFiles(String input, String output) throws IOException {
-        FileUtilities fileUtilities = new FileUtilities();
-
-        Path outPath = Paths.get(output);
-        if (Files.exists(outPath, new LinkOption[] { LinkOption.NOFOLLOW_LINKS })) {
-            fileUtilities.removeExistingFolder(output);
-        }
-
-        Files.createDirectories(outPath);
-
-        ArrayList<String> txtFiles = fileUtilities.getAllTxtFiles(input);
-        fileUtilities.generateHTMLFiles(txtFiles, output);
-    }
-
-    public static void createHTMLFiles(String input, String output, ArrayList<String> stylesheetLinks)
-            throws IOException {
-        FileUtilities fileUtilities = new FileUtilities();
-
-        Path outPath = Paths.get(output);
-        if (Files.exists(outPath, new LinkOption[] { LinkOption.NOFOLLOW_LINKS })) {
-            fileUtilities.removeExistingFolder(output);
-        }
-
-        Files.createDirectories(outPath);
-
-        ArrayList<String> txtFiles = fileUtilities.getAllTxtFiles(input);
-        fileUtilities.generateHTMLFiles(txtFiles, output, stylesheetLinks);
     }
 }
