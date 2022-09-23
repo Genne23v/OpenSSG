@@ -39,6 +39,9 @@ public class Parser {
                 bodyContent.append("\s\s<h2>").append(line.substring(3)).append("</h2>\n");
                 isClosed = true;
                 wasThereEmptyLine = false;
+            } else if (line.equals("---")){
+                bodyContent.append("</p>\n\s\s<br>\n");
+                isClosed = true;
             } else if (line.isEmpty()) {
                 wasThereEmptyLine = true;
             } else {
