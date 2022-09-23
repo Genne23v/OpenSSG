@@ -16,7 +16,8 @@ public class FileUtilities {
     static final String MD = ".md";
     static final String TXT = ".txt";
     static final String HTML = ".html";
-    static final String HEADER_BEFORE_TITLE = "<!doctype html>\n<html lang=\"en\">\n<head>\n\s\s<meta charset=\"utf-8\">\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
+    static final String DOCTYPE = "<!doctype html>\n";
+    static final String META_TAGS = "<head>\n\s\s<meta charset=\"utf-8\">\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
     static final String HEADER_CLOSING_TAG =  "\n</head>\n<body>\n";
     static final String BODY_CLOSING_TAGS = "</p>\n</body>\n</html>";
     static final String DEFAULT_CSS_LINKS = "\s\s<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/tufte.min.css\">\n\s\s<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/water.css@2/out/water.css\">";
@@ -64,11 +65,14 @@ public class FileUtilities {
         });
     }
 
-    public static void createIndexFile(String output, ArrayList<String> convertingFiles) throws IOException{
-        File indexFile = new File(output + "/index.html");
+    public static void createIndexFile(Options options, ArrayList<String> convertingFiles) throws IOException{
+        File indexFile = new File(options.getOutput() + "/index.html");
         FileWriter fileWriter = new FileWriter(indexFile);
 
-        fileWriter.write(HEADER_BEFORE_TITLE + DEFAULT_CSS_LINKS);
+        fileWriter.write(DOCTYPE);
+        fileWriter.write("<html lang=\"" + options.getLanguage() + "\">\n");
+        fileWriter.write((META_TAGS));
+        fileWriter.write(DEFAULT_CSS_LINKS);
         fileWriter.write("\n\s\s<title>Index Page</title>");
         fileWriter.write(HEADER_CLOSING_TAG + "\s\s<ul>");
 
@@ -139,7 +143,7 @@ public class FileUtilities {
         }
 
         if (!(options.getInput().endsWith(TXT) || options.getInput().endsWith(MD))){
-            createIndexFile(options.getOutput(), convertingFiles);
+            createIndexFile(options, convertingFiles);
         }
     }
 
@@ -148,7 +152,9 @@ public class FileUtilities {
         File htmlFile = new File(newHtmlFilename);
         FileWriter fileWriter = new FileWriter(htmlFile);
 
-        fileWriter.write(HEADER_BEFORE_TITLE);
+        fileWriter.write(DOCTYPE);
+        fileWriter.write("<html lang=\"" + options.getLanguage() + "\">\n");
+        fileWriter.write(META_TAGS);
 
         if (!options.getStylesheetLinks().isEmpty()){
             fileWriter.write(Parser.getCssLinks(options.getStylesheetLinks()));
@@ -187,7 +193,9 @@ public class FileUtilities {
         File htmlFile = new File(newHtmlFilename);
         FileWriter fileWriter = new FileWriter(htmlFile);
 
-        fileWriter.write(HEADER_BEFORE_TITLE);
+        fileWriter.write(DOCTYPE);
+        fileWriter.write("<html lang=\"" + options.getLanguage() + "\">\n");
+        fileWriter.write(META_TAGS);
 
         if (!options.getStylesheetLinks().isEmpty()){
             fileWriter.write(Parser.getCssLinks(options.getStylesheetLinks()));

@@ -1,12 +1,10 @@
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.io.IOException;
 
 public class OpenSSG {
-    private static final String OPTION_DESCRIPTION = "\nAvailable options:\n[-v | --version]\t\t\tDisplay program information\n[-h | --help]\t\t\t\tDisplay how to use options\n[-i | --input <file-or-folder>]\t\tSpecify input file or folder\n[-o | --output <folder-name>]\t\tSpecify output folder. Default is ./dist\n[-s | --stylesheet <CSS-URL>]\t\tAdd CSS links to each of the html file";
+    private static final String OPTION_DESCRIPTION = "\nAvailable options:\n[-v | --version]\t\t\tDisplay program information\n[-h | --help]\t\t\t\tDisplay how to use options\n[-i | --input <file-or-folder>]\t\tSpecify input file or folder\n[-o | --output <folder-name>]\t\tSpecify output folder. Default is ./dist\n[-l | --lang <language-country>]\t\tSpecify language to add it to html tag";
 
     public static void main(String[] args) throws IOException {
         if (areArgsValid(args)) {
@@ -30,8 +28,9 @@ public class OpenSSG {
 
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
-                case "-i", "--input" -> options.setInput(args[i + 1]);//optionArgs.put("-i", args[i + 1]);
-                case "-o", "--output" -> options.setOutput(args[i + 1]);
+                case "-i", "--input" -> options.setInput(args[i+1]);
+                case "-o", "--output" -> options.setOutput(args[i+1]);
+                case "-l", "--lang" -> options.setLanguage(args[i+1]);
                 case "-s", "--stylesheet" -> {
                     int j = i + 1;
                     ArrayList<String> stylesheetLinks = new ArrayList<>();
@@ -49,7 +48,7 @@ public class OpenSSG {
     public static boolean areArgsValid(String[] args) {
         boolean isValid = true;
         String[] basicOptions = { "-v", "--version", "-h", "--help" };
-        String[] singleArgOptions = { "-i", "--input", "-o", "--output" };
+        String[] singleArgOptions = { "-i", "--input", "-o", "--output", "-l", "-lang" };
         String[] stylesheetOptions = { "-s", "--stylesheet" };
 
         if (args.length > 0) {
@@ -68,11 +67,11 @@ public class OpenSSG {
                         if (i<args.length){
                             if (args[i].startsWith(("-"))){
                                 isValid = false;
-                                System.out.println("Missing option argument");
+                                System.out.println("Missing option argument. Check out the usage by running java OpenSSG -h or --help.");
                             }
                         } else {
                             isValid = false;
-                            System.out.println("Missing option argument");
+                            System.out.println("Missing option argument. Check out the usage by running java OpenSSG -h or --help.");
                         }
                     } else if (Arrays.asList(stylesheetOptions).contains(args[i])){
                         i++;
@@ -88,7 +87,7 @@ public class OpenSSG {
                 }
             }
         } else {
-            System.out.println("Please provide an option. You can check usage by running OpenSSG -h or OpenSSG --help.");
+            System.out.println("Please provide an option. Check usage by running OpenSSG -h or OpenSSG --help.");
         }
         return isValid;
     }

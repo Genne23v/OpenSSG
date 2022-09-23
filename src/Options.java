@@ -4,7 +4,7 @@ public class Options {
     private String input;
     private String output = "./dist";
     private ArrayList<String> stylesheetLinks;
-    private String language = "en-CA";
+    private String language = "en";
 
     public Options(String input, String output, ArrayList<String> stylesheetLinks, String language){
         this.input = input;
