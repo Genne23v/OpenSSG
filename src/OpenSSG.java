@@ -18,20 +18,20 @@ public class OpenSSG {
                 case "--help", "-h" ->
                         System.out.println("usage: " + new Release().name + " <option>\n" + OPTION_DESCRIPTION);
                 default -> {
-                    var optionArgs = analyzeArgs(args);
-                    sortOptionAndCreateFiles(optionArgs);
+                    var optionArgs = createOptions(args);
+                    generateHtmlFiles(optionArgs);
                 }
             }
         }
     }
 
-    public static Dictionary<String, Object> analyzeArgs(String[] args) {
-        Dictionary<String, Object> optionArgs = new Hashtable<>();
+    public static Options createOptions(String[] args) {
+        Options options = new Options();
 
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
-                case "-i", "--input" -> optionArgs.put("-i", args[i + 1]);
-                case "-o", "--output" -> optionArgs.put("-o", args[i + 1]);
+                case "-i", "--input" -> options.setInput(args[i + 1]);//optionArgs.put("-i", args[i + 1]);
+                case "-o", "--output" -> options.setOutput(args[i + 1]);
                 case "-s", "--stylesheet" -> {
                     int j = i + 1;
                     ArrayList<String> stylesheetLinks = new ArrayList<>();
@@ -39,11 +39,11 @@ public class OpenSSG {
                         stylesheetLinks.add(args[j]);
                         j++;
                     }
-                    optionArgs.put("-s", stylesheetLinks);
+                    options.setStylesheetLinks(stylesheetLinks);
                 }
             }
         }
-        return optionArgs;
+        return options;
     }
 
     public static boolean areArgsValid(String[] args) {
@@ -93,33 +93,9 @@ public class OpenSSG {
         return isValid;
     }
 
-    public static void sortOptionAndCreateFiles(Dictionary<String, Object> optionArgs) throws IOException {
-        String inputOption = (String) optionArgs.get("-i");
-        String outputOption;
+    public static void generateHtmlFiles(Options optionArgs) throws IOException {
         FileUtilities fileUtil = new FileUtilities();
 
-        if (optionArgs.get("-o") != null && optionArgs.get("-s") != null) {
-            outputOption = (String) optionArgs.get("-o");
-            @SuppressWarnings("unchecked")
-            ArrayList<String> stylesheetOption = (ArrayList<String>) optionArgs.get("-s");
-
-            fileUtil.createHTMLFiles(inputOption, outputOption, stylesheetOption);
-
-        } else if (optionArgs.get("-o") == null && optionArgs.get("-s") != null) {
-            outputOption = FileUtilities.DIST_FOLDER;
-            @SuppressWarnings("unchecked")
-            ArrayList<String> stylesheetOption = (ArrayList<String>) optionArgs.get("-s");
-
-            fileUtil.createHTMLFiles(inputOption, outputOption, stylesheetOption);
-
-        } else if (optionArgs.get("-o") != null && optionArgs.get("-s") == null) {
-            outputOption = (String) optionArgs.get("-o");
-
-            fileUtil.createHTMLFiles(inputOption, outputOption);
-
-        } else if (optionArgs.get("-o") == null && optionArgs.get("-s") == null) {
-
-            fileUtil.createHTMLFiles(inputOption);
-        }
+        fileUtil.generateHtmlFiles(optionArgs);
     }
 }
