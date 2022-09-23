@@ -11,39 +11,36 @@ public class OpenSSG {
     public static void main(String[] args) throws IOException {
         if (areArgsValid(args)) {
             switch (args[0]) {
-                case "--version":
-                case "-v":
+                case "--version", "-v" -> {
                     Release release = new Release();
                     System.out.println("OpenSSG version " + release.version + ", " + release.dateOfRelease);
-                    break;
-                case "--help":
-                case "-h":
-                    System.out.println("usage: " + new Release().name + " <option>\n" + OPTION_DESCRIPTION);
-                    break;
-                default:
+                }
+                case "--help", "-h" ->
+                        System.out.println("usage: " + new Release().name + " <option>\n" + OPTION_DESCRIPTION);
+                default -> {
                     var optionArgs = analyzeArgs(args);
                     sortOptionAndCreateFiles(optionArgs);
+                }
             }
         }
     }
 
     public static Dictionary<String, Object> analyzeArgs(String[] args) {
-        Dictionary<String, Object> optionArgs = new Hashtable<String, Object>();
+        Dictionary<String, Object> optionArgs = new Hashtable<>();
 
         for (int i = 0; i < args.length; i++) {
-            if (args[i].equals("-i") || args[i].equals("--input")) {
-                optionArgs.put("-i", args[i + 1]);
-            } else if (args[i].equals("-o") || args[i].equals("--output")) {
-                optionArgs.put("-o", args[i + 1]);
-            } else if (args[i].equals("-s") || args[i].equals("--stylesheet")) {
-                int j = i + 1;
-                ArrayList<String> stylesheetLinks = new ArrayList<String>();
-
-                while (j < args.length && !args[j].startsWith("-")) {
-                    stylesheetLinks.add(args[j]);
-                    j++;
+            switch (args[i]) {
+                case "-i", "--input" -> optionArgs.put("-i", args[i + 1]);
+                case "-o", "--output" -> optionArgs.put("-o", args[i + 1]);
+                case "-s", "--stylesheet" -> {
+                    int j = i + 1;
+                    ArrayList<String> stylesheetLinks = new ArrayList<>();
+                    while (j < args.length && !args[j].startsWith("-")) {
+                        stylesheetLinks.add(args[j]);
+                        j++;
+                    }
+                    optionArgs.put("-s", stylesheetLinks);
                 }
-                optionArgs.put("-s", stylesheetLinks);
             }
         }
         return optionArgs;
@@ -61,7 +58,7 @@ public class OpenSSG {
                     System.out.println("Cannot process other option or argument. Check the usage by running java OpenSSG -h or --help.");    
                     isValid = false;
                 }
-            } else if (!(Arrays.asList(args).contains("-i") || Arrays.asList(args).contains("-input"))){
+            } else if (!(Arrays.asList(args).contains("-i") || Arrays.asList(args).contains("--input"))){
                 isValid = false;
                 System.out.println("Input option must be provided with <File> or <Folder> argument. Check the usage by running java OpenSSG -h or --help.");
             } else {
@@ -98,7 +95,7 @@ public class OpenSSG {
 
     public static void sortOptionAndCreateFiles(Dictionary<String, Object> optionArgs) throws IOException {
         String inputOption = (String) optionArgs.get("-i");
-        String outputOption = "";
+        String outputOption;
         FileUtilities fileUtil = new FileUtilities();
 
         if (optionArgs.get("-o") != null && optionArgs.get("-s") != null) {
@@ -119,10 +116,10 @@ public class OpenSSG {
             outputOption = (String) optionArgs.get("-o");
 
             fileUtil.createHTMLFiles(inputOption, outputOption);
+
         } else if (optionArgs.get("-o") == null && optionArgs.get("-s") == null) {
 
             fileUtil.createHTMLFiles(inputOption);
-
         }
     }
 }
