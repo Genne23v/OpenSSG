@@ -22,7 +22,8 @@ public class Parser {
         boolean wasThereEmptyLine = false;
         boolean isClosed = true;
         Pattern mdLinkPattern = Pattern.compile("\\[([^]]+)]\\(([^)]+)\\)");
-        Matcher matcher;
+        Pattern mdCodePattern = Pattern.compile("`([^`].*?)`");
+        Matcher mdLinkMatcher, mdCodeMatcher;
 
         for (String line : linesFromInputFile){
             if (line.startsWith("# ")){
@@ -54,9 +55,12 @@ public class Parser {
                     wasThereEmptyLine = false;
                 }
 
-                matcher = mdLinkPattern.matcher(line);
-                if (matcher.find()) {
+                mdLinkMatcher = mdLinkPattern.matcher(line);
+                mdCodeMatcher = mdCodePattern.matcher(line);
+                if (mdLinkMatcher.find()) {
                     bodyContent.append(line.replaceAll(String.valueOf(mdLinkPattern), "<a href=\"$2\">$1</a>"));
+                } else if (mdCodeMatcher.find()) {
+                    bodyContent.append(line.replaceAll(String.valueOf(mdCodePattern), "<code>$1</code>"));
                 } else {
                     bodyContent.append(line);
                 }
