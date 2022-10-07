@@ -20,6 +20,24 @@ Run `java OpenSSG -h` or `java OpenSSG --help` to find the usage and how to use 
 
 `java OpenSSG -l <LANGUAGE>` or `java OpenSSG --lang <LANGUAGE>` will update the default `<html lang="en">` to specified lang option.
 
+## Config File
+You can specify a `-c` or `--config` flag with a JSON file passed as an argument like `-c test.json` and it will search the JSON file for appropriate values such as stylesheets array or lang flag to change the nature of the program's operation. An example valid JSON would look like so:
+
+```
+{
+    "input": "Silver Blaze.txt",
+    "lang": "fr",
+    "stylesheets": ["https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/tufte.min.css",
+    "https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"],
+    "This":"Blah",
+    "output": "NewWorkingHTML"
+}
+```
+
+In this example multiple styles will be taken out of stylesheets and used, also "This" will be ignored.
+
+Note that keys in the json are case sensitive. `input` `lang` `stylesheets` and `output` will work.
+
 ## Generated Sample Site 
 https://genne23v.github.io/sherlock-homes-selected-stories/
 

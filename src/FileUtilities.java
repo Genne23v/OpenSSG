@@ -156,9 +156,13 @@ public class FileUtilities {
         fileWriter.write("<html lang=\"" + options.getLanguage() + "\">\n");
         fileWriter.write(META_TAGS);
 
-        if (!options.getStylesheetLinks().isEmpty()){
-            fileWriter.write(Parser.getCssLinks(options.getStylesheetLinks()));
+        if ( options.getStylesheetLinks() != null ){
+            if (!options.getStylesheetLinks().isEmpty()){
+                fileWriter.write(Parser.getCssLinks(options.getStylesheetLinks()));
+            }
         }
+
+
 
         String[] linesFromInputFile = readFile(file);
         String[] linesAfterCheckingTitle;
