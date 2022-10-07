@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.io.IOException;
 
 public class OpenSSG {
-    private static final String OPTION_DESCRIPTION = "\nAvailable options:\n[-v | --version]\t\t\tDisplay program information\n[-h | --help]\t\t\t\tDisplay how to use options\n[-i | --input <file-or-folder>]\t\tSpecify input file or folder\n[-o | --output <folder-name>]\t\tSpecify output folder. Default is ./dist\n[-l | --lang <language-country>]\t\tSpecify language to add it to html tag";
+    private static final String OPTION_DESCRIPTION = "\nAvailable options:\n[-v | --version]\t\t\tDisplay program information\n[-h | --help]\t\t\t\tDisplay how to use options\n[-i | --input <file-or-folder>]\t\tSpecify input file or folder\n[-o | --output <folder-name>]\t\tSpecify output folder. Default is ./dist\n[-l | --lang <language-country>]\tSpecify language to add it to html tag\n[-c | --config <config-file>]\t\tSpecify a json file location that has options";
 
     public static void main(String[] args) throws IOException {
         if (areArgsValid(args)) {

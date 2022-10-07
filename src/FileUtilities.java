@@ -90,7 +90,15 @@ public class FileUtilities {
     }
 
     public static String trimFilename(String filename){
-        return "/" + filename.replace("./", "").substring(0, filename.lastIndexOf("."));
+        String fileWithoutExt = filename.substring(0, filename.lastIndexOf("."));
+        String trimmedFilename = "";
+
+        if (fileWithoutExt.indexOf("/") >= 0){
+            trimmedFilename = fileWithoutExt.substring(fileWithoutExt.indexOf("/"));
+        } else {
+            trimmedFilename = "/" + fileWithoutExt;
+        }
+        return trimmedFilename;
     }
 
     public static void createSubDirectory(String output, String filename) throws IOException{
@@ -201,7 +209,7 @@ public class FileUtilities {
         fileWriter.write("<html lang=\"" + options.getLanguage() + "\">\n");
         fileWriter.write(META_TAGS);
 
-        if (!options.getStylesheetLinks().isEmpty()){
+        if (options.getStylesheetLinks() != null){
             fileWriter.write(Parser.getCssLinks(options.getStylesheetLinks()));
         }
         fileWriter.write("\s\s<title>" + Paths.get(file).getFileName().toString() + "</title>");
