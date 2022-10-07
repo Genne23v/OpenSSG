@@ -2,9 +2,10 @@
 OpenSSG is a static site generator to grep all text and markdown files in a designated folder, and generate matching HTML files in a separate folder. And index.html file will be created to link all your generated html files. Your text file will turn into complete website! You can also specify output folder, and it will generate html files in the same hierarchy from original folder. You can specify CSS files to add too. 
 
 ## Installation
-JDK must be installed in your computer. [JDK Download](https://www.oracle.com/java/technologies/downloads/)
+JDK must be installed in your computer. [JDK Download](https://www.oracle.com/java/technologies/downloads/) <br />
+The current JDK version is `18.0.2.1`. 
 
-Go to `src/` folder and compile the program by running `javac OpenSSG.java FileUtilities.java Release.java` in command line. Then it's ready for you to use! 
+Go to `src/` folder and compile the program by running `javac OpenSSG.java FileUtilities.java Options.java Parser.java Release.java` in command line. Then it's ready for you to use! 
 
 ## Usage
 Run `java OpenSSG -v` or `java OpenSSG --version` to check program information
@@ -16,6 +17,8 @@ Run `java OpenSSG -h` or `java OpenSSG --help` to find the usage and how to use 
 `java OpenSSG -o <FOLDER NAME>` or `java OpenSSG --output <FOLDER NAME>` will override default folder and create a new folder to generate HTML files. If you want to add spaces in folder name, folder name should be surrounded by quotation marks. 
 
 `java OpenSSG -s <CSS LINK1> <CSS LINK2>...` or `java OpenSSG --stylesheet <CSS LINK1> <CSS LINK2>...` will add CSS files to each HTML file's head. Multiple CSS file links can be added to the command.
+
+`java OpenSSG -l <LANGUAGE>` or `java OpenSSG --lang <LANGUAGE>` will update the default `<html lang="en">` to specified lang option.
 
 ## Generated Sample Site 
 https://genne23v.github.io/sherlock-homes-selected-stories/
