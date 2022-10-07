@@ -66,7 +66,7 @@ public class OpenSSG {
             if(configProps.containsKey("output")){
                 options.setOutput((String)configProps.get("output"));
             }
-            if(configProps.containsKey("stylesheet")){
+            if(configProps.containsKey("stylesheets")){
                 options.setStylesheetLinks(stylesheets);
             }
             if(configProps.containsKey("lang")){
