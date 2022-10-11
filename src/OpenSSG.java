@@ -11,20 +11,20 @@ import java.util.Arrays;
 import java.io.IOException;
 
 public class OpenSSG {
-    private static final String OPTION_DESCRIPTION = "\nAvailable options:\n[-v | --version]\t\t\tDisplay program information\n[-h | --help]\t\t\t\tDisplay how to use options\n[-i | --input <file-or-folder>]\t\tSpecify input file or folder\n[-o | --output <folder-name>]\t\tSpecify output folder. Default is ./dist\n[-l | --lang <language-country>]\tSpecify language to add it to html tag\n[-c | --config <config-file>]\t\tSpecify a json file location that has options";
+    private static final String OPTION_DESCRIPTION = "\nAvailable options:\n[-v | --version]\t\t\t\t\tDisplay program information\n[-h | --help]\t\t\t\t\t\tDisplay how to use options\n[-i | --input <file-or-folder>]\t\tSpecify input file or folder\n[-o | --output <folder-name>]\t\tSpecify output folder. Default is ./dist\n[-l | --lang <language-country>]\tSpecify language to add it to html tag\n[-c | --config <config-file>]\t\tSpecify a json file location that has options";
 
     public static void main(String[] args) throws IOException {
+
         if (areArgsValid(args)) {
             switch (args[0]) {
                 case "--version", "-v" -> {
-                    Release release = new Release();
-                    System.out.println("OpenSSG version " + release.version + ", " + release.dateOfRelease);
+                    System.out.println("OpenSSG version " + Release.version + ", " + Release.dateOfRelease);
                 }
                 case "--help", "-h" ->
-                        System.out.println("usage: " + new Release().name + " <option>\n" + OPTION_DESCRIPTION);
+                        System.out.println("usage: " + Release.name + " <option>\n" + OPTION_DESCRIPTION);
                 case "--config", "-c" -> {
                     System.out.println("Parsing a potential config file.");
-                    var optionArgs = config(args[1]);
+                    var optionArgs = createOptionFromFile(args[1]);
                     generateHtmlFiles(optionArgs);
                 }
                 default -> {
@@ -38,12 +38,8 @@ public class OpenSSG {
     /** Handle opening of JSON or throwing of error and exiting of program.
      * Read from JSON and assign appropriate properties from it while ignoring the ones that do not exist.
      * @param jsonFN This is the filename that should be taken as an argument when user starts the program under -c or --config*/
-    public static Options config(String jsonFN)  {
-        //TODO: Handle opening of JSON or throwing of error and exiting of program
-        //TODO: Read from JSON and assign appropriate properties from it while ignoring the ones that do not exist.
-
+    public static Options createOptionFromFile(String jsonFN)  {
         Options options = new Options();
-
         JSONParser jsonParser = new JSONParser();
 
         try(FileReader reader = new FileReader(jsonFN)){
@@ -58,7 +54,6 @@ public class OpenSSG {
                     stylesheets.add((String)styleArray.get(i));
                 }
             }
-
 
             if(configProps.containsKey("input")) {
                 options.setInput((String) configProps.get("input"));
@@ -131,20 +126,20 @@ public class OpenSSG {
                 isValid=true;
             }
             else if (!(Arrays.asList(args).contains("-i") || Arrays.asList(args).contains("--input"))){
-                isValid = false;
                 System.out.println("Input option must be provided with <File> or <Folder> argument. Check the usage by running java OpenSSG -h or --help.");
+                isValid = false;
             } else {
                 for (int i = 0; i < args.length; i++) {
                     if (Arrays.asList(singleArgOptions).contains(args[i])) {
                         i++;
                         if (i<args.length){
                             if (args[i].startsWith(("-"))){
-                                isValid = false;
                                 System.out.println("Missing option argument. Check out the usage by running java OpenSSG -h or --help.");
+                                isValid = false;
                             }
                         } else {
-                            isValid = false;
                             System.out.println("Missing option argument. Check out the usage by running java OpenSSG -h or --help.");
+                            isValid = false;
                         }
                     } else if (Arrays.asList(stylesheetOptions).contains(args[i])){
                         i++;
@@ -153,8 +148,8 @@ public class OpenSSG {
                                 i++;
                             }
                         } else {
-                            isValid = false;
                             System.out.println("Missing option argument. Please provide CSS links to add.");
+                            isValid = false;
                         }
                     }
                 }

@@ -65,7 +65,7 @@ public class FileUtilities {
         });
     }
 
-    public static void createIndexFile(Options options, ArrayList<String> convertingFiles) throws IOException{
+    public static void createIndexFile(Options options, ArrayList<String> linkHTMLFiles) throws IOException{
         File indexFile = new File(options.getOutput() + "/index.html");
         FileWriter fileWriter = new FileWriter(indexFile);
 
@@ -76,7 +76,7 @@ public class FileUtilities {
         fileWriter.write("\n\s\s<title>Index Page</title>");
         fileWriter.write(HEADER_CLOSING_TAG + "\s\s<ul>");
 
-        for (String file : convertingFiles){
+        for (String file : linkHTMLFiles){
             String linkOfFile = file.substring(0, file.lastIndexOf("."));
             String encodedLink = linkOfFile.replaceAll(" ", "%20");
             String titleOfLink = Paths.get(file).getFileName().toString().split("\\.")[0];
@@ -109,19 +109,19 @@ public class FileUtilities {
 
     public static String[] readFile(String file) throws FileNotFoundException{
         int lineNumber=0;
-        Scanner fileScannerToCount = new Scanner(new File(file));
+        Scanner scannerToCountLines = new Scanner(new File(file));
 
-        while(fileScannerToCount.hasNextLine()){
-            fileScannerToCount.nextLine();
+        while(scannerToCountLines.hasNextLine()){
+            scannerToCountLines.nextLine();
             lineNumber++;
         }
         
         String[] linesFromInputFile = new String[lineNumber];
-        Scanner fileScannerToRead = new Scanner(new File(file));
+        Scanner scannerToRead = new Scanner(new File(file));
 
         int i=0;
-        while(fileScannerToRead.hasNextLine()){
-            linesFromInputFile[i] = fileScannerToRead.nextLine();
+        while(scannerToRead.hasNextLine()){
+            linesFromInputFile[i] = scannerToRead.nextLine();
             i++;
         }
 
@@ -169,8 +169,6 @@ public class FileUtilities {
                 fileWriter.write(Parser.getCssLinks(options.getStylesheetLinks()));
             }
         }
-
-
 
         String[] linesFromInputFile = readFile(file);
         String[] linesAfterCheckingTitle;

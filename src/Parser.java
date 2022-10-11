@@ -20,41 +20,41 @@ public class Parser {
     public static String parseMarkdownSyntax(String[] linesFromInputFile){
         StringBuilder bodyContent = new StringBuilder();
         boolean wasThereEmptyLine = false;
-        boolean isClosed = true;
+        boolean isTagClosed = true;
         Pattern mdLinkPattern = Pattern.compile("\\[([^]]+)]\\(([^)]+)\\)");
         Pattern mdCodePattern = Pattern.compile("`([^`].*?)`");
         Matcher mdLinkMatcher, mdCodeMatcher;
 
         for (String line : linesFromInputFile){
             if (line.startsWith("# ")){
-                if (!isClosed) {
+                if (!isTagClosed) {
                     bodyContent.append("</p>\n");
                 }
                 bodyContent.append("\s\s<h1>").append(line.substring(2)).append("</h1>\n");
-                isClosed = true;
+                isTagClosed = true;
                 wasThereEmptyLine = false;
             } else if (line.startsWith("## ")) {
-                if (!isClosed) {
+                if (!isTagClosed) {
                     bodyContent.append("</p>\n");
                 }
                 bodyContent.append("\s\s<h2>").append(line.substring(3)).append("</h2>\n");
-                isClosed = true;
+                isTagClosed = true;
                 wasThereEmptyLine = false;
             } else if (line.equals("---")){
                 bodyContent.append("</p>\n\s\s<br>\n");
-                isClosed = true;
+                isTagClosed = true;
             } else if (line.isEmpty()) {
                 wasThereEmptyLine = true;
             } else {
-                if (wasThereEmptyLine && !isClosed){
+                if (wasThereEmptyLine && !isTagClosed){
                     bodyContent.append("</p>\n");
                     wasThereEmptyLine = false;
-                    isClosed = true;
+                    isTagClosed = true;
                 }
 
-                if (isClosed){
+                if (isTagClosed){
                     bodyContent.append("\s\s<p>");
-                    isClosed = false;
+                    isTagClosed = false;
                     wasThereEmptyLine = false;
                 }
 
