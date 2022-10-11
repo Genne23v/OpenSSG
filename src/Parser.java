@@ -41,7 +41,7 @@ public class Parser {
                 isTagClosed = true;
                 wasThereEmptyLine = false;
             } else if (line.equals("---")){
-                bodyContent.append("</p>\n\s\s<br>\n");
+                bodyContent.append("</p>\n\s\s<hr>\n");
                 isTagClosed = true;
             } else if (line.isEmpty()) {
                 wasThereEmptyLine = true;
