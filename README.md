@@ -6,7 +6,7 @@ OpenSSG is a static site generator to grep all text and markdown files in a desi
 2. Then, create a `/libs` folder in your project root. 
 3. Download `json-simple-1.1.1jar` file [Here](https://repo1.maven.org/maven2/com/googlecode/json-simple/json-simple/1.1.1/), and add it to `/libs` folder. 
 
-Go to `/src` folder and compile the program by running `javac -cp ./libs/* OpenSSG.java FileUtilities.java Options.java Parser.java Release.java` in command line. Then it's ready for you to use! 
+Go to `/src` folder and compile the program by running `javac -cp ./libs/* OpenSSG.java FileUtilities.java Options.java ParsingUtils.java Release.java` in command line. Then it's ready for you to use! 
 
 ## Usage
 Run `java OpenSSG -v` or `java OpenSSG --version` to check program information
