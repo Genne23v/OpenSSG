@@ -11,6 +11,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.LinkOption;
 import java.util.ArrayList;
 import java.util.Scanner;
+import org.commonmark.node.*;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 
 public class FileUtilities {
     static final String MD = ".md";
@@ -92,9 +95,9 @@ public class FileUtilities {
 
     public static String trimFilename(String filename){
         String fileWithoutExt = filename.substring(0, filename.lastIndexOf("."));
-        String trimmedFilename = "";
+        String trimmedFilename;
 
-        if (fileWithoutExt.indexOf("/") >= 0){
+        if (fileWithoutExt.indexOf("/") > 0){
             trimmedFilename = fileWithoutExt.substring(fileWithoutExt.indexOf("/"));
         } else {
             trimmedFilename = "/" + fileWithoutExt;
@@ -127,6 +130,18 @@ public class FileUtilities {
         }
 
         return linesFromInputFile;
+    }
+
+    private static String readMdFile(String file) throws FileNotFoundException {
+        StringBuilder bodyContent = new StringBuilder();
+        Scanner scanner = new Scanner(new File(file));
+
+        while(scanner.hasNextLine()){
+            bodyContent.append(scanner.nextLine());
+            bodyContent.append("\n");
+        }
+
+        return bodyContent.toString();
     }
 
     public void generateHtmlFiles(Options options) throws IOException {
@@ -170,7 +185,7 @@ public class FileUtilities {
 
         if ( options.getStylesheetLinks() != null ){
             if (!options.getStylesheetLinks().isEmpty()){
-                fileWriter.write(Parser.getCssLinks(options.getStylesheetLinks()));
+                fileWriter.write(ParsingUtils.getCssLinks(options.getStylesheetLinks()));
             }
         }
 
@@ -178,7 +193,7 @@ public class FileUtilities {
         String[] linesAfterCheckingTitle;
         String title;
 
-        if (Parser.hasTitle(linesFromInputFile)){
+        if (ParsingUtils.hasTitle(linesFromInputFile)){
             title = linesFromInputFile[0];
             linesAfterCheckingTitle = new String[linesFromInputFile.length-3];
             System.arraycopy(linesFromInputFile, 3, linesAfterCheckingTitle, 0, linesFromInputFile.length-3);
@@ -191,12 +206,12 @@ public class FileUtilities {
         fileWriter.write(sidebar);
         fileWriter.write(MAIN_OPENING_TAG);
 
-        if (Parser.hasTitle(linesFromInputFile)) {
+        if (ParsingUtils.hasTitle(linesFromInputFile)) {
             fileWriter.write("\s\s<h1>" + title + "</h1>");
         }
         fileWriter.write("\n\s\s<p>");
 
-        fileWriter.write(Parser.parseToHtmlBody(linesAfterCheckingTitle));
+        fileWriter.write(ParsingUtils.parseToHtmlBody(linesAfterCheckingTitle));
 
         fileWriter.write(BODY_CLOSING_TAGS);
         fileWriter.close();
@@ -214,22 +229,23 @@ public class FileUtilities {
         fileWriter.write(META_TAGS);
 
         if (options.getStylesheetLinks() != null){
-            fileWriter.write(Parser.getCssLinks(options.getStylesheetLinks()));
+            fileWriter.write(ParsingUtils.getCssLinks(options.getStylesheetLinks()));
         }
         fileWriter.write("\s\s<title>" + Paths.get(file).getFileName().toString() + "</title>");
         fileWriter.write(HEADER_CLOSING_TAG);
         fileWriter.write(sidebar);
         fileWriter.write(MAIN_OPENING_TAG);
 
-        String[] linesFromInputFile = readFile(file);
+        String bodyContent = readMdFile(file);
+        String parsedBodyContent = ParsingUtils.parseMarkdownSyntax(bodyContent);
 
-        String bodyContent = Parser.parseMarkdownSyntax(linesFromInputFile);
-
-        fileWriter.write(bodyContent);
+        fileWriter.write(parsedBodyContent);
         fileWriter.write(BODY_CLOSING_TAGS);
         fileWriter.close();
 
         System.out.println(newHtmlFilename + " has been created");
     }
+
+
 }
 
