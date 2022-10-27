@@ -22,7 +22,8 @@ public class FileUtilities {
     static final String DOCTYPE = "<!doctype html>\n";
     static final String META_TAGS = "<head>\n\s\s<meta charset=\"utf-8\">\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
     static final String HEADER_CLOSING_TAG =  "\n</head>\n<body>\n";
-    static final String BODY_CLOSING_TAGS = "</p>\n</body>\n</html>";
+    static final String MAIN_OPENING_TAG = "<div class=\"main\">";
+    static final String BODY_CLOSING_TAGS = "</p>\n</div>\n</body>\n</html>";
     static final String DEFAULT_CSS_LINKS = "\s\s<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/tufte.min.css\">\n\s\s<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/water.css@2/out/water.css\">";
 
     public static ArrayList<String> getAllTxtAndMdFiles(String inputArg) throws IOException{
@@ -156,12 +157,15 @@ public class FileUtilities {
     }
 
     private static void parseFilesIntoHtml(ArrayList<String> convertingFiles, Options options) throws IOException {
+        //CONFIGURE SIDEBAR HERE
+        String sideBar = Parser.buildSidebar(convertingFiles);
+
         for (String file : convertingFiles){
             FileUtilities.createSubDirectory(options.getOutput(), file);
 
             switch (file.substring(file.lastIndexOf("."))) {
-                case ".txt" -> FileUtilities.convertTxtFile(file, options);
-                case ".md" -> FileUtilities.convertMdFile(file, options);
+                case ".txt" -> FileUtilities.convertTxtFile(file, options, sideBar);
+                case ".md" -> FileUtilities.convertMdFile(file, options, sideBar);
             }
         }
 
@@ -170,7 +174,7 @@ public class FileUtilities {
         }
     }
 
-    public static void convertTxtFile(String file, Options options) throws IOException {
+    public static void convertTxtFile(String file, Options options, String sidebar) throws IOException {
         String newHtmlFilename = options.getOutput() + trimFilename(file) + HTML;
         File htmlFile = new File(newHtmlFilename);
         FileWriter fileWriter = new FileWriter(htmlFile);
@@ -199,6 +203,8 @@ public class FileUtilities {
         }
         fileWriter.write("\s\s<title>" + title + "</title>");
         fileWriter.write(HEADER_CLOSING_TAG);
+        fileWriter.write(sidebar);
+        fileWriter.write(MAIN_OPENING_TAG);
 
         if (ParsingUtils.hasTitle(linesFromInputFile)) {
             fileWriter.write("\s\s<h1>" + title + "</h1>");
@@ -213,7 +219,7 @@ public class FileUtilities {
         System.out.println(newHtmlFilename + " has been created");
     }
 
-    public static void convertMdFile(String file, Options options) throws IOException {
+    public static void convertMdFile(String file, Options options, String sidebar) throws IOException {
         String newHtmlFilename = options.getOutput() + trimFilename(file) + HTML;
         File htmlFile = new File(newHtmlFilename);
         FileWriter fileWriter = new FileWriter(htmlFile);
@@ -227,6 +233,8 @@ public class FileUtilities {
         }
         fileWriter.write("\s\s<title>" + Paths.get(file).getFileName().toString() + "</title>");
         fileWriter.write(HEADER_CLOSING_TAG);
+        fileWriter.write(sidebar);
+        fileWriter.write(MAIN_OPENING_TAG);
 
         String bodyContent = readMdFile(file);
         String parsedBodyContent = ParsingUtils.parseMarkdownSyntax(bodyContent);
