@@ -1,5 +1,7 @@
 # OpenSSG
-OpenSSG is a static site generator to grep all text and markdown files in a designated folder, and generate matching HTML files in a separate folder. And index.html file will be created to link all your generated html files. Your text file will turn into complete website! You can also specify output folder, and it will generate html files in the same hierarchy from original folder. You can specify CSS files to add too. 
+OpenSSG is a static site generator to grep all text and markdown files in a designated folder, and generate matching HTML files in a separate folder. 
+
+And index.html file will be created to link all your generated html files. Each page also will have the auto-configured sidebar to navigate pages easily. Your text file will turn into complete website! You can also specify output folder, and it will generate html files in the same hierarchy from original folder. You can specify CSS files to add too. 
 
 ## Installation
 1. JDK must be installed in your computer [JDK Download](https://www.oracle.com/java/technologies/downloads/). The current JDK version is `18.0.2.1`. <br />
@@ -43,13 +45,14 @@ Note that keys in the json are case sensitive. `input` `lang` `stylesheets` and 
 https://genne23v.github.io/sherlock-homes-selected-stories/
 
 ## Release
-| Version | Date          |
-|--------|---------------|
-| 0.3.0 | Oct, 7, 2022 |
-| 0.2.0  | Sep, 22, 2022 |
-| 0.1.2  | Sep, 18, 2022 |
-| 0.1.1  | Sep, 16, 2022 |
-| 0.1.0  | Sep, 11, 2022 |
+| Version | Date           |
+|---------|----------------|
+| 0.4.0   | Oct, 26, 2022  |
+| 0.3.0   | Oct, 7, 2022   |
+| 0.2.0   | Sep, 22, 2022  |
+| 0.1.2   | Sep, 18, 2022  |
+| 0.1.1   | Sep, 16, 2022  |
+| 0.1.0   | Sep, 11, 2022  |
 
 
 
