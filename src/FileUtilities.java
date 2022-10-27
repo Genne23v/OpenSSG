@@ -11,9 +11,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.LinkOption;
 import java.util.ArrayList;
 import java.util.Scanner;
-import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 
 public class FileUtilities {
     static final String MD = ".md";
@@ -157,8 +155,7 @@ public class FileUtilities {
     }
 
     private static void parseFilesIntoHtml(ArrayList<String> convertingFiles, Options options) throws IOException {
-        //CONFIGURE SIDEBAR HERE
-        String sideBar = Parser.buildSidebar(convertingFiles);
+        String sideBar = ParsingUtils.buildSidebar(convertingFiles);
 
         for (String file : convertingFiles){
             FileUtilities.createSubDirectory(options.getOutput(), file);
