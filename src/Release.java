@@ -1,6 +1,8 @@
 
 public class Release {
-    static final String name = "OpenSSG";
-    static final String version = "0.3.1";
-    static final String dateOfRelease = "2022-10-10";
+    static final String NAME = "OpenSSG";
+    static final String VERSION = "0.4.1";
+    static final String DATE_OF_RELEASE = "2022-11-04";
+
+    private Release() {}
 }

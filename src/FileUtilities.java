@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,7 +8,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.LinkOption;
 import java.util.ArrayList;
 import java.util.Scanner;
-import org.commonmark.parser.Parser;
 
 public class FileUtilities {
     static final String MD = ".md";
@@ -19,23 +15,23 @@ public class FileUtilities {
     static final String HTML = ".html";
     static final String DOCTYPE = "<!doctype html>\n";
     static final String META_TAGS = "<head>\n\s\s<meta charset=\"utf-8\">\n\s\s<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
-    static final String HEADER_CLOSING_TAG =  "\n</head>\n<body>\n";
+    static final String HEADER_CLOSING_TAG = "\n</head>\n<body>\n";
     static final String MAIN_OPENING_TAG = "<div class=\"main\">";
     static final String BODY_CLOSING_TAGS = "</p>\n</div>\n</body>\n</html>";
     static final String DEFAULT_CSS_LINKS = "\s\s<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/tufte.min.css\">\n\s\s<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/water.css@2/out/water.css\">";
 
-    public static ArrayList<String> getAllTxtAndMdFiles(String inputArg) throws IOException{
+    public static ArrayList<String> getAllTxtAndMdFiles(String inputArg) throws IOException {
         ArrayList<String> fileNames = new ArrayList<>();
 
-        if (!(inputArg.endsWith(TXT) && inputArg.endsWith(MD))){
+        if (!(inputArg.endsWith(TXT) && inputArg.endsWith(MD))) {
             Path path = Paths.get(inputArg);
-            
-            Files.walkFileTree(path, new SimpleFileVisitor<>(){
+
+            Files.walkFileTree(path, new SimpleFileVisitor<>() {
                 @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs){
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
                     System.out.println("Found " + file.toString());
 
-                    if (file.toString().endsWith(TXT) || file.toString().endsWith(MD)){
+                    if (file.toString().endsWith(TXT) || file.toString().endsWith(MD)) {
                         fileNames.add(file.toString());
                     }
                     return FileVisitResult.CONTINUE;
@@ -48,28 +44,29 @@ public class FileUtilities {
         return fileNames;
     }
 
-    public static void removeExistingFolder(String folderName) throws IOException{
+    public static void removeExistingFolder(String folderName) throws IOException {
         Path outPath = Paths.get(folderName);
-        Files.walkFileTree(outPath, new SimpleFileVisitor<>(){
-           @Override
-           public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException{
-            System.out.println("Delete file: " + file.toString());
-            Files.delete(file);
-            return FileVisitResult.CONTINUE;
-           } 
+        Files.walkFileTree(outPath, new SimpleFileVisitor<>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                System.out.println("Delete file: " + file.toString());
+                Files.delete(file);
+                return FileVisitResult.CONTINUE;
+            }
 
-           @Override
-           public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
-            Files.delete(dir);
-            System.out.println("Delete dir: " + dir);
-            return FileVisitResult.CONTINUE;
-           }
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
+                Files.delete(dir);
+                System.out.println("Delete dir: " + dir);
+                return FileVisitResult.CONTINUE;
+            }
         });
     }
 
-    public static void createIndexFile(Options options, ArrayList<String> linkHTMLFiles) throws IOException{
+    public static void createIndexFile(Options options, ArrayList<String> linkHTMLFiles) throws IOException {
         File indexFile = new File(options.getOutput() + "/index.html");
-        FileWriter fileWriter = new FileWriter(indexFile);
+        FileOutputStream fs = new FileOutputStream(indexFile);
+        var fileWriter = new OutputStreamWriter(fs, "UTF-8");
 
         fileWriter.write(DOCTYPE);
         fileWriter.write("<html lang=\"" + options.getLanguage() + "\">\n");
@@ -78,11 +75,15 @@ public class FileUtilities {
         fileWriter.write("\n\s\s<title>Index Page</title>");
         fileWriter.write(HEADER_CLOSING_TAG + "\s\s<ul>");
 
-        for (String file : linkHTMLFiles){
+        for (String file : linkHTMLFiles) {
             String linkOfFile = file.substring(0, file.lastIndexOf("."));
             String encodedLink = linkOfFile.replaceAll(" ", "%20");
-            String titleOfLink = Paths.get(file).getFileName().toString().split("\\.")[0];
-            fileWriter.write("\n\s\s\s\s<li><a href=\"" + encodedLink + HTML + "\">" + titleOfLink + "</a></li>");
+
+            var filename = Paths.get(file).getFileName();
+            if (filename != null) {
+                String titleOfLink = filename.toString().split("\\.")[0];
+                fileWriter.write("\n\s\s\s\s<li><a href=\"" + encodedLink + HTML + "\">" + titleOfLink + "</a></li>");
+            }
         }
 
         fileWriter.write("\n\s\s</ul>\n</body>\n</html>");
@@ -91,11 +92,11 @@ public class FileUtilities {
         System.out.println("index.html has been created");
     }
 
-    public static String trimFilename(String filename){
+    public static String trimFilename(String filename) {
         String fileWithoutExt = filename.substring(0, filename.lastIndexOf("."));
         String trimmedFilename;
 
-        if (fileWithoutExt.indexOf("/") > 0){
+        if (fileWithoutExt.indexOf("/") > 0) {
             trimmedFilename = fileWithoutExt.substring(fileWithoutExt.indexOf("/"));
         } else {
             trimmedFilename = "/" + fileWithoutExt;
@@ -103,26 +104,30 @@ public class FileUtilities {
         return trimmedFilename;
     }
 
-    public static void createSubDirectory(String output, String filename) throws IOException{
+    public static void createSubDirectory(String output, String filename) throws IOException {
         Path path = Paths.get(output + "/" + filename);
-        String newDirectory = path.getParent().toString();
-        Files.createDirectories(Paths.get(newDirectory));
+
+        var parentPath = path.getParent();
+        if (parentPath != null) {
+            String newDirectory = parentPath.toString();
+            Files.createDirectories(Paths.get(newDirectory));
+        }
     }
 
-    public static String[] readFile(String file) throws FileNotFoundException{
-        int lineNumber=0;
-        Scanner scannerToCountLines = new Scanner(new File(file));
+    public static String[] readFile(String file) throws FileNotFoundException {
+        int lineNumber = 0;
+        Scanner scannerToCountLines = new Scanner(new File(file), "UTF-8");
 
-        while(scannerToCountLines.hasNextLine()){
+        while (scannerToCountLines.hasNextLine()) {
             scannerToCountLines.nextLine();
             lineNumber++;
         }
-        
-        String[] linesFromInputFile = new String[lineNumber];
-        Scanner scannerToRead = new Scanner(new File(file));
 
-        int i=0;
-        while(scannerToRead.hasNextLine()){
+        String[] linesFromInputFile = new String[lineNumber];
+        Scanner scannerToRead = new Scanner(new File(file), "UTF-8");
+
+        int i = 0;
+        while (scannerToRead.hasNextLine()) {
             linesFromInputFile[i] = scannerToRead.nextLine();
             i++;
         }
@@ -132,9 +137,9 @@ public class FileUtilities {
 
     private static String readMdFile(String file) throws FileNotFoundException {
         StringBuilder bodyContent = new StringBuilder();
-        Scanner scanner = new Scanner(new File(file));
+        Scanner scanner = new Scanner(new File(file), "UTF-8");
 
-        while(scanner.hasNextLine()){
+        while (scanner.hasNextLine()) {
             bodyContent.append(scanner.nextLine());
             bodyContent.append("\n");
         }
@@ -157,16 +162,20 @@ public class FileUtilities {
     private static void parseFilesIntoHtml(ArrayList<String> convertingFiles, Options options) throws IOException {
         String sideBar = ParsingUtils.buildSidebar(convertingFiles);
 
-        for (String file : convertingFiles){
+        for (String file : convertingFiles) {
             FileUtilities.createSubDirectory(options.getOutput(), file);
 
             switch (file.substring(file.lastIndexOf("."))) {
-                case ".txt" -> FileUtilities.convertTxtFile(file, options, sideBar);
-                case ".md" -> FileUtilities.convertMdFile(file, options, sideBar);
+                case ".txt": FileUtilities.convertTxtFile(file, options, sideBar);
+                    break;
+                case ".md": FileUtilities.convertMdFile(file, options, sideBar);
+                    break;
+                default:
+                    break;
             }
         }
 
-        if (!(options.getInput().endsWith(TXT) || options.getInput().endsWith(MD))){
+        if (!(options.getInput().endsWith(TXT) || options.getInput().endsWith(MD))) {
             createIndexFile(options, convertingFiles);
         }
     }
@@ -174,28 +183,32 @@ public class FileUtilities {
     public static void convertTxtFile(String file, Options options, String sidebar) throws IOException {
         String newHtmlFilename = options.getOutput() + trimFilename(file) + HTML;
         File htmlFile = new File(newHtmlFilename);
-        FileWriter fileWriter = new FileWriter(htmlFile);
+        FileOutputStream fs = new FileOutputStream(htmlFile);
+        var fileWriter = new OutputStreamWriter(fs, "UTF-8");
 
         fileWriter.write(DOCTYPE);
         fileWriter.write("<html lang=\"" + options.getLanguage() + "\">\n");
         fileWriter.write(META_TAGS);
 
-        if ( options.getStylesheetLinks() != null ){
-            if (!options.getStylesheetLinks().isEmpty()){
+        if (options.getStylesheetLinks() != null) {
+            if (!options.getStylesheetLinks().isEmpty()) {
                 fileWriter.write(ParsingUtils.getCssLinks(options.getStylesheetLinks()));
             }
         }
 
         String[] linesFromInputFile = readFile(file);
         String[] linesAfterCheckingTitle;
-        String title;
+        String title = "";
 
-        if (ParsingUtils.hasTitle(linesFromInputFile)){
+        if (ParsingUtils.hasTitle(linesFromInputFile)) {
             title = linesFromInputFile[0];
-            linesAfterCheckingTitle = new String[linesFromInputFile.length-3];
-            System.arraycopy(linesFromInputFile, 3, linesAfterCheckingTitle, 0, linesFromInputFile.length-3);
+            linesAfterCheckingTitle = new String[linesFromInputFile.length - 3];
+            System.arraycopy(linesFromInputFile, 3, linesAfterCheckingTitle, 0, linesFromInputFile.length - 3);
         } else {
-            title = Paths.get(options.getOutput() + file.substring(1)).getFileName().toString();
+            var filename = Paths.get(options.getOutput() + file.substring(1)).getFileName();
+            if (filename != null){
+                title = filename.toString();
+            }
             linesAfterCheckingTitle = linesFromInputFile;
         }
         fileWriter.write("\s\s<title>" + title + "</title>");
@@ -219,16 +232,23 @@ public class FileUtilities {
     public static void convertMdFile(String file, Options options, String sidebar) throws IOException {
         String newHtmlFilename = options.getOutput() + trimFilename(file) + HTML;
         File htmlFile = new File(newHtmlFilename);
-        FileWriter fileWriter = new FileWriter(htmlFile);
+        FileOutputStream fs = new FileOutputStream(htmlFile);
+        var fileWriter = new OutputStreamWriter(fs, "UTF-8");
 
         fileWriter.write(DOCTYPE);
         fileWriter.write("<html lang=\"" + options.getLanguage() + "\">\n");
         fileWriter.write(META_TAGS);
 
-        if (options.getStylesheetLinks() != null){
+        if (options.getStylesheetLinks() != null) {
             fileWriter.write(ParsingUtils.getCssLinks(options.getStylesheetLinks()));
         }
-        fileWriter.write("\s\s<title>" + Paths.get(file).getFileName().toString() + "</title>");
+
+        var filename = Paths.get(file).getFileName();
+        if (filename != null){
+            String filenameWithoutExt = filename.toString().substring(0, filename.toString().lastIndexOf("."));
+            fileWriter.write("\s\s<title>" + filenameWithoutExt + "</title>");
+        }
+
         fileWriter.write(HEADER_CLOSING_TAG);
         fileWriter.write(sidebar);
         fileWriter.write(MAIN_OPENING_TAG);

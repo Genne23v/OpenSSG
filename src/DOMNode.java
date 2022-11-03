@@ -1,31 +1,33 @@
 import java.util.HashSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class DOMNode<T> {
-    private HashSet<DOMNode<T>> children = new HashSet<DOMNode<T>>();
+    private HashSet<DOMNode<T>> children = new HashSet<>();
     private DOMNode<T> parent = null;
-    private T data = null;
+    private T data;
 
     public DOMNode(T data) {
         this.data = data;
     }
 
-    public DOMNode(T data, DOMNode<T> parent) {
+    public DOMNode(T data, final DOMNode<T> parent) {
         this.data = data;
-        this.parent = parent;
+        var parentCopy = new DOMNode<>(parent.getData());
+        this.parent = parentCopy;
     }
 
     public HashSet<DOMNode<T>> getChildren() {
-        return children;
+        var newChildren = new HashSet<DOMNode<T>>(children);
+        return newChildren;
     }
 
     public void setParent(DOMNode<T> parent) {
-        this.parent = parent;
+        var parentCopy = new DOMNode<>(parent.getData());
+        this.parent = parentCopy;
     }
 
     public void addChild(T data) {
-        DOMNode<T> child = new DOMNode<T>(data);
+        DOMNode<T> child = new DOMNode<>(data);
         child.setParent(this);
         this.children.add(child);
     }
@@ -35,29 +37,29 @@ public class DOMNode<T> {
         this.children.add(child);
     }
 
-    public DOMNode<T> getChild(T data){
+    public DOMNode<T> getChild(T data) {
         DOMNode<T> node = null;
-        for (DOMNode<T> child : this.children){
-           if (child.getData().equals(data)){
+        for (DOMNode<T> child : this.children) {
+            if (child.getData().equals(data)) {
                 node = child;
-           }
+            }
         }
         return node;
     }
 
-    public boolean doesChildrenHaveData(T data){
-        boolean doesChildrenHaveData = false;
-        for (DOMNode<T> child : this.children){
-            if (child.getData().equals(data)){
-                doesChildrenHaveData = true;
+    public boolean samePathExistsInChildren(T data) {
+        boolean samePathExistsInChildren = false;
+        for (DOMNode<T> child : this.children) {
+            if (child.getData().equals(data)) {
+                samePathExistsInChildren = true;
             }
         }
-        return doesChildrenHaveData;
+        return samePathExistsInChildren;
     }
 
     public String getUrl() {
-        if (this.parent == null){
-            return "./" + this.data;
+        if (this.parent == null) {
+            return ".";
         }
         return this.parent.getUrl() + "/" + this.data;
     }

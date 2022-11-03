@@ -5,10 +5,11 @@ And index.html file will be created to link all your generated html files. Each 
 
 ## Installation
 1. JDK must be installed in your computer [JDK Download](https://www.oracle.com/java/technologies/downloads/). The current JDK version is `18.0.2.1`. <br />
-2. Then, create a `/libs` folder in your project root. 
-3. Download `json-simple-1.1.1jar` file [Here](https://repo1.maven.org/maven2/com/googlecode/json-simple/json-simple/1.1.1/), and add it to `/libs` folder. 
+2. Add Maven dependency modules `com.googlecode.json-simple.json:1.1.1`, `org.commonmark:commonmark:0.17.1`
+3. Build and run in IDE
 
-Go to `/src` folder and compile the program by running `javac -cp ./libs/* OpenSSG.java FileUtilities.java Options.java ParsingUtils.java Release.java` in command line. Then it's ready for you to use! 
+If you want to run in terminal, create `/lib` folder and add dependency jar files to `/lib` folder. 
+Then, go to `/src` folder and compile the program by running `javac -cp ./libs/* OpenSSG.java FileUtilities.java Options.java ParsingUtils.java Release.java DOMNode.java` in command line.  
 
 ## Usage
 Run `java OpenSSG -v` or `java OpenSSG --version` to check program information

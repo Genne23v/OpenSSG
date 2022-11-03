@@ -1,12 +1,5 @@
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class Options {
     private String input;
@@ -14,25 +7,25 @@ public class Options {
     private ArrayList<String> stylesheetLinks;
     private String language = "en";
 
-    public Options(String input, String output, ArrayList<String> stylesheetLinks, String language){
+    public Options(String input, String output, ArrayList<String> stylesheetLinks, String language) {
         this.input = input;
         this.output = output;
-        this.stylesheetLinks = stylesheetLinks;
+        this.stylesheetLinks = new ArrayList<>(stylesheetLinks);
         this.language = language;
     }
 
-    public Options(String input, String output, ArrayList<String> stylesheetLinks){
+    public Options(String input, String output, ArrayList<String> stylesheetLinks) {
         this.input = input;
         this.output = output;
-        this.stylesheetLinks = stylesheetLinks;
+        this.stylesheetLinks = new ArrayList<>(stylesheetLinks);
     }
 
-    public Options(String input, String output){
+    public Options(String input, String output) {
         this.input = input;
         this.output = output;
     }
 
-    public Options(){
+    public Options() {
     }
 
     public String getInput() {
@@ -52,11 +45,14 @@ public class Options {
     }
 
     public ArrayList<String> getStylesheetLinks() {
-        return stylesheetLinks;
+        if (stylesheetLinks != null) {
+            return new ArrayList<>(stylesheetLinks);
+        }
+        return null;
     }
 
     public void setStylesheetLinks(ArrayList<String> stylesheetLinks) {
-        this.stylesheetLinks = stylesheetLinks;
+        this.stylesheetLinks = new ArrayList<>(stylesheetLinks);
     }
 
     public String getLanguage() {
