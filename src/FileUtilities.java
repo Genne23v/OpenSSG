@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileUtilities {
+    static final String UTF8 = "UTF-8";
     static final String MD = ".md";
     static final String TXT = ".txt";
     static final String HTML = ".html";
@@ -66,7 +67,7 @@ public class FileUtilities {
     public static void createIndexFile(Options options, ArrayList<String> linkHTMLFiles) throws IOException {
         File indexFile = new File(options.getOutput() + "/index.html");
         FileOutputStream fs = new FileOutputStream(indexFile);
-        var fileWriter = new OutputStreamWriter(fs, "UTF-8");
+        var fileWriter = new OutputStreamWriter(fs, UTF8);
 
         fileWriter.write(DOCTYPE);
         fileWriter.write("<html lang=\"" + options.getLanguage() + "\">\n");
@@ -116,7 +117,7 @@ public class FileUtilities {
 
     public static String[] readFile(String file) throws FileNotFoundException {
         int lineNumber = 0;
-        Scanner scannerToCountLines = new Scanner(new File(file), "UTF-8");
+        Scanner scannerToCountLines = new Scanner(new File(file), UTF8);
 
         while (scannerToCountLines.hasNextLine()) {
             scannerToCountLines.nextLine();
@@ -124,7 +125,7 @@ public class FileUtilities {
         }
 
         String[] linesFromInputFile = new String[lineNumber];
-        Scanner scannerToRead = new Scanner(new File(file), "UTF-8");
+        Scanner scannerToRead = new Scanner(new File(file), UTF8);
 
         int i = 0;
         while (scannerToRead.hasNextLine()) {
@@ -137,7 +138,7 @@ public class FileUtilities {
 
     private static String readMdFile(String file) throws FileNotFoundException {
         StringBuilder bodyContent = new StringBuilder();
-        Scanner scanner = new Scanner(new File(file), "UTF-8");
+        Scanner scanner = new Scanner(new File(file), UTF8);
 
         while (scanner.hasNextLine()) {
             bodyContent.append(scanner.nextLine());
@@ -184,7 +185,7 @@ public class FileUtilities {
         String newHtmlFilename = options.getOutput() + trimFilename(file) + HTML;
         File htmlFile = new File(newHtmlFilename);
         FileOutputStream fs = new FileOutputStream(htmlFile);
-        var fileWriter = new OutputStreamWriter(fs, "UTF-8");
+        var fileWriter = new OutputStreamWriter(fs, UTF8);
 
         fileWriter.write(DOCTYPE);
         fileWriter.write("<html lang=\"" + options.getLanguage() + "\">\n");
@@ -233,7 +234,7 @@ public class FileUtilities {
         String newHtmlFilename = options.getOutput() + trimFilename(file) + HTML;
         File htmlFile = new File(newHtmlFilename);
         FileOutputStream fs = new FileOutputStream(htmlFile);
-        var fileWriter = new OutputStreamWriter(fs, "UTF-8");
+        var fileWriter = new OutputStreamWriter(fs, UTF8);
 
         fileWriter.write(DOCTYPE);
         fileWriter.write("<html lang=\"" + options.getLanguage() + "\">\n");

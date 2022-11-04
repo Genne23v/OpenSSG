@@ -48,7 +48,7 @@ public class Options {
         if (stylesheetLinks != null) {
             return new ArrayList<>(stylesheetLinks);
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public void setStylesheetLinks(ArrayList<String> stylesheetLinks) {

@@ -7,7 +7,8 @@ import org.commonmark.renderer.html.HtmlRenderer;
 
 public class ParsingUtils {
 
-    private ParsingUtils() {}
+    private ParsingUtils() {
+    }
 
     public static String getCssLinks(ArrayList<String> stylesheetLinks) {
         StringBuilder cssLinks = new StringBuilder();
