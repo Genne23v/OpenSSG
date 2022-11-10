@@ -1,0 +1,8 @@
+{
+  "input": "./Sherlock Homes",
+  "lang": "fr",
+  "stylesheets": ["https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/tufte.min.css",
+    "https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"],
+  "This":"Blah",
+  "output": "tmp"
+}

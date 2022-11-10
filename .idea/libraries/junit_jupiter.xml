@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="junit.jupiter" type="repository">
+    <properties maven-id="org.junit.jupiter:junit-jupiter:5.9.1" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SjsonkkkEP2022/OSD600/wk-ssg/lib/junit-jupiter-5.9.1.jar!/" />
+      <root url="jar://$USER_HOME$/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SjsonkkkEP2022/OSD600/wk-ssg/lib/junit-jupiter-api-5.9.1.jar!/" />
+      <root url="jar://$USER_HOME$/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SjsonkkkEP2022/OSD600/wk-ssg/lib/opentest4j-1.2.0.jar!/" />
+      <root url="jar://$USER_HOME$/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SjsonkkkEP2022/OSD600/wk-ssg/lib/junit-platform-commons-1.9.1.jar!/" />
+      <root url="jar://$USER_HOME$/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SjsonkkkEP2022/OSD600/wk-ssg/lib/apiguardian-api-1.1.2.jar!/" />
+      <root url="jar://$USER_HOME$/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SjsonkkkEP2022/OSD600/wk-ssg/lib/junit-jupiter-params-5.9.1.jar!/" />
+      <root url="jar://$USER_HOME$/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SjsonkkkEP2022/OSD600/wk-ssg/lib/junit-jupiter-engine-5.9.1.jar!/" />
+      <root url="jar://$USER_HOME$/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SjsonkkkEP2022/OSD600/wk-ssg/lib/junit-platform-engine-1.9.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

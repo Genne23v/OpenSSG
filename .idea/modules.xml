@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/wk-ssg.iml" filepath="$PROJECT_DIR$/wk-ssg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OpenSSG.iml" filepath="$PROJECT_DIR$/.idea/modules/OpenSSG.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/OpenSSG.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/OpenSSG.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/OpenSSG.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/OpenSSG.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/OpenSSG.app.test.iml" filepath="$PROJECT_DIR$/.idea/modules/app/OpenSSG.app.test.iml" />
     </modules>
   </component>
 </project>

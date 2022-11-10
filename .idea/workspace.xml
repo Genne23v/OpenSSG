@@ -4,11 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0b81be1a-bf24-494c-b59f-d5dbb3eb55fd" name="Changes" comment="" />
+    <list default="true" id="0b81be1a-bf24-494c-b59f-d5dbb3eb55fd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CONTRIBUTING.md" beforeDir="false" afterPath="$PROJECT_DIR$/CONTRIBUTING.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/genne23v/openssg/ParsingUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/genne23v/openssg/ParsingUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/genne23v/openssg/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/genne23v/openssg/AppTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/genne23v/openssg/FileUtilitiesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/genne23v/openssg/FileUtilitiesTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/genne23v/openssg/ParsingUtilsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/genne23v/openssg/ParsingUtilsTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view />
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -31,33 +49,34 @@
     </option>
   </component>
   <component name="ProjectId" id="2FodzX2bWtTxvK2GIfls2KsKpqy" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path&quot;: &quot;/Users/zakk23v/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SjsonkkkEP2022/OSD600/wk-ssg/lib&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/zakk23v/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SEP2022/OSD600/wk-ssg&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path": "/Users/zakk23v/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SjsonkkkEP2022/OSD600/wk-ssg/lib",
+    "Downloaded.Files.Path.Enabled": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/zakk23v/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SEP2022/OSD600/wk-ssg",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -67,7 +86,7 @@
       <recent name="$PROJECT_DIR$/test" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.config test">
+  <component name="RunManager" selected="JUnit.ParsingUtilsTest.renderListTest">
     <configuration name="config test" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="OpenSSG" />
       <module name="wk-ssg" />
@@ -94,34 +113,102 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="/Users/zakk23v/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SEP2022/OSD600/wk-ssg" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list />
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
+    <configuration name="AppTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="OpenSSG.app.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.genne23v.openssg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.genne23v.openssg" />
+      <option name="MAIN_CLASS_NAME" value="com.genne23v.openssg.AppTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AppTest.argValidityTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="OpenSSG.app.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.genne23v.openssg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.genne23v.openssg" />
+      <option name="MAIN_CLASS_NAME" value="com.genne23v.openssg.AppTest" />
+      <option name="METHOD_NAME" value="argValidityTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AppTest.createConfigOptionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="OpenSSG.app.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.genne23v.openssg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.genne23v.openssg" />
+      <option name="MAIN_CLASS_NAME" value="com.genne23v.openssg.AppTest" />
+      <option name="METHOD_NAME" value="createConfigOptionTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AppTest.createOptionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="OpenSSG.app.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.genne23v.openssg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.genne23v.openssg" />
+      <option name="MAIN_CLASS_NAME" value="com.genne23v.openssg.AppTest" />
+      <option name="METHOD_NAME" value="createOptionsTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ParsingUtilsTest.renderListTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="OpenSSG.app.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.genne23v.openssg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.genne23v.openssg" />
+      <option name="MAIN_CLASS_NAME" value="com.genne23v.openssg.ParsingUtilsTest" />
+      <option name="METHOD_NAME" value="renderListTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <list>
       <item itemvalue="Application.wrong option" />
       <item itemvalue="Application.input only" />
       <item itemvalue="Application.config test" />
-      <item itemvalue="Gradle./Users/zakk23v/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SEP2022/OSD600/wk-ssg" />
+      <item itemvalue="JUnit.AppTest" />
+      <item itemvalue="JUnit.AppTest.argValidityTest" />
+      <item itemvalue="JUnit.AppTest.createConfigOptionTest" />
+      <item itemvalue="JUnit.AppTest.createOptionsTest" />
+      <item itemvalue="JUnit.ParsingUtilsTest.renderListTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle./Users/zakk23v/Library/CloudStorage/OneDrive-Seneca/Seneca-CPA/SEM05_SEP2022/OSD600/wk-ssg" />
+        <item itemvalue="JUnit.ParsingUtilsTest.renderListTest" />
+        <item itemvalue="JUnit.AppTest.argValidityTest" />
+        <item itemvalue="JUnit.AppTest" />
+        <item itemvalue="JUnit.AppTest.createOptionsTest" />
+        <item itemvalue="JUnit.AppTest.createConfigOptionTest" />
       </list>
     </recent_temporary>
   </component>
