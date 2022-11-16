@@ -18,7 +18,7 @@ public class OptionsTest {
         Assertions.assertEquals("input", options.getInput());
         Assertions.assertEquals("output", options.getOutput());
         Assertions.assertEquals("style1", options.getStylesheetLinks().get(0));
-        Assertions.assertEquals("en-CA", options.getLanguage());
+        Assertions.assertEquals("en-CAA", options.getLanguage());
     }
 
     @Test

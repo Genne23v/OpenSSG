@@ -7,6 +7,7 @@
     <list default="true" id="0b81be1a-bf24-494c-b59f-d5dbb3eb55fd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/genne23v/openssg/OptionsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/genne23v/openssg/OptionsTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,7 +224,7 @@
       <workItem from="1667435911057" duration="256000" />
       <workItem from="1667436182551" duration="11786000" />
       <workItem from="1667448253346" duration="13647000" />
-      <workItem from="1668634005511" duration="3137000" />
+      <workItem from="1668634005511" duration="3332000" />
     </task>
     <servers />
   </component>
