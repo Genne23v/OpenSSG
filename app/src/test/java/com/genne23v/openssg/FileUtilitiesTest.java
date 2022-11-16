@@ -62,10 +62,12 @@ public class FileUtilitiesTest {
 
         Assertions.assertEquals("Silver Blaze", linesFromFile[0]);
 
+        /*
         String path2 = "src/test/resources/file.txt";
         File file2 = new File(path2);
         String absolutePath2 = file2.getAbsolutePath();
 
         //Add test to throw
+         */
     }
 }
