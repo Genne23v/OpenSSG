@@ -1,5 +1,6 @@
 package com.genne23v.openssg;
 
+import org.commonmark.internal.util.Parsing;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -14,10 +15,17 @@ public class ParsingUtilsTest {
     public void getCssLinkTest() {
         ArrayList<String> stylesheets = new ArrayList<>();
         stylesheets.add("style");
+        String expected = "\s\s<link rel=\"stylesheet\" href=\"style\">\n";
 
-        Assertions.assertEquals("\s\s<link rel=\"stylesheet\" href=\"style\">\n", ParsingUtils.getCssLinks(stylesheets));
+        Assertions.assertEquals(expected, ParsingUtils.getCssLinks(stylesheets));
 
-        stylesheets.remove(0);
+        stylesheets.add("style1");
+        expected += "\s\s<link rel=\"stylesheet\" href=\"style1\">\n";
+
+        Assertions.assertEquals(expected, ParsingUtils.getCssLinks(stylesheets));
+
+        stylesheets.clear();
+
         Assertions.assertEquals("", ParsingUtils.getCssLinks(stylesheets));
     }
 
@@ -38,9 +46,11 @@ public class ParsingUtilsTest {
     public void parseToHtmlTest() {
         String[] stringArray1 = new String[]{"line1", "line2"};
         String[] stringArray2 = new String[]{"line1", "", "line2"};
+        String[] stringArray3 = new String[]{"line1"};
 
         Assertions.assertEquals("line1\nline2", ParsingUtils.parseToHtmlBody(stringArray1));
         Assertions.assertEquals("line1</p>\n\s\s<p>line2", ParsingUtils.parseToHtmlBody(stringArray2));
+        Assertions.assertEquals("line1", ParsingUtils.parseToHtmlBody(stringArray3));
     }
 
     @Test
@@ -49,28 +59,32 @@ public class ParsingUtilsTest {
         String strong = "I am *strong*";
         String hr = "---";
         String link = "[link](https://test.com)";
-        Parser parser = Parser.builder().build();
-        Node document = parser.parse(heading);
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
 
-        Assertions.assertEquals("<h1>h1 heading</h1>\n", renderer.render(document));
+        Assertions.assertEquals("<h1>h1 heading</h1>\n", ParsingUtils.parseMarkdownSyntax(heading));
 
-        document = parser.parse(strong);
-        Assertions.assertEquals("<p>I am <em>strong</em></p>\n", renderer.render(document));
+        Assertions.assertEquals("<p>I am <em>strong</em></p>\n", ParsingUtils.parseMarkdownSyntax(strong));
 
-        document = parser.parse(hr);
-        Assertions.assertEquals("<hr />\n", renderer.render(document));
+        Assertions.assertEquals("<hr />\n", ParsingUtils.parseMarkdownSyntax(hr));
 
-        document = parser.parse(link);
-        Assertions.assertEquals("<p><a href=\"https://test.com\">link</a></p>\n", renderer.render(document));
+        Assertions.assertEquals("<p><a href=\"https://test.com\">link</a></p>\n", ParsingUtils.parseMarkdownSyntax(link));
     }
 
     @Test
     public void builderSidebarTest() {
         ArrayList<String> files = new ArrayList<>();
         files.add("./test/file.md");
+        String expected = "<div class=\"sidebar\"><ul>test<li><a href=\"./test/file.html\">file</a></li>\n</ul>\n</div>";
 
-        Assertions.assertEquals("<div class=\"sidebar\"><ul>test<li><a href=\"./test/file.html\">file</a></li>\n</ul>\n</div>", ParsingUtils.buildSidebar(files));
+        Assertions.assertEquals(expected, ParsingUtils.buildSidebar(files));
+
+        files.add("./test/file1.md");
+        expected = "<div class=\"sidebar\"><ul>test<li><a href=\"./test/file1.html\">file1</a></li>\n<li><a href=\"./test/file.html\">file</a></li>\n</ul>\n</div>";
+
+        Assertions.assertEquals(expected, ParsingUtils.buildSidebar(files));
+
+        files.clear();
+
+        Assertions.assertEquals("<div class=\"sidebar\"><ul></ul>\n</div>", ParsingUtils.buildSidebar(files));
     }
 
     @Test
