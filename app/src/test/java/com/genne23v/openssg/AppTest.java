@@ -5,6 +5,7 @@ package com.genne23v.openssg;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.function.Executable;
 
 import java.io.*;
 
@@ -24,12 +25,15 @@ public class AppTest {
         App.main(args2);
         Assertions.assertEquals("", outContent2.toString());
 
-        /* Implement file exception error handling
-        ByteArrayOutputStream outContent3 = new ByteArrayOutputStream();
-        String[] args3 = {"--config", "src/test/resources/notExistConfig.json"};
-        App.main(args3);
-        Assertions.assertEquals("", outContent3.toString());
-         */
+        Assertions.assertThrows(IOException.class, new Executable() {
+
+            @Override
+            public void execute() throws Throwable {
+                String[] args3 = {"--config", "src/test/resources/notExistConfig.json"};
+                App.main(args3);
+            }
+        });
+
     }
 
     @Test
