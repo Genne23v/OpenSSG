@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b81be1a-bf24-494c-b59f-d5dbb3eb55fd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/genne23v/openssg/Release.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/genne23v/openssg/Release.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,7 +223,7 @@
       <workItem from="1667436182551" duration="11786000" />
       <workItem from="1667448253346" duration="13647000" />
       <workItem from="1668634005511" duration="5733000" />
-      <workItem from="1669130613842" duration="34993000" />
+      <workItem from="1669130613842" duration="35144000" />
     </task>
     <servers />
   </component>
