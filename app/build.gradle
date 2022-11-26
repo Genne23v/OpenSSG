@@ -16,7 +16,6 @@ plugins {
 }
 
 apply plugin: "com.vanniktech.maven.publish"
-apply plugin: 'maven'
 apply plugin: 'signing'
 
 group = 'io.github.genne23v'
