@@ -7,9 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="wk-ssg" />
+        <module name="OpenSSG" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="OpenSSG" target="1.8" />
       <module name="wk-ssg" target="" />
     </bytecodeTargetLevel>
   </component>
