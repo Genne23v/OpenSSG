@@ -15,12 +15,12 @@ plugins {
     id 'maven-publish'
 }
 
-apply plugin: "com.vanniktech.maven.publish"
-apply plugin: 'signing'
+//apply plugin: "com.vanniktech.maven.publish"
+//apply plugin: 'signing'
 
 group = 'io.github.genne23v'
 archivesBaseName = 'open-ssg'
-version = '0.9.1'
+version = '0.9.3'
 
 if (!hasProperty('mainClass')) {
     ext.mainClass = 'com.genne23v.openssg.App'
@@ -29,6 +29,10 @@ if (!hasProperty('mainClass')) {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
 }
 
 dependencies {
@@ -40,6 +44,7 @@ dependencies {
     implementation 'com.google.guava:guava:31.0.1-jre'
     implementation group: 'org.commonmark', name: 'commonmark', version: '0.17.0'
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    testImplementation 'org.testng:testng:7.1.0'
 }
 
 application {

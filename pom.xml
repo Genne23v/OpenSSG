@@ -6,7 +6,7 @@
 
     <groupId>io.github.genne23v</groupId>
     <artifactId>open-ssg</artifactId>
-    <version>0.9.1</version>
+    <version>0.9.3</version>
     <packaging>jar</packaging>
 
     <name>OpenSSG</name>
@@ -74,7 +74,6 @@
                 </configuration>
             </plugin>
 
-
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -86,8 +85,6 @@
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
-
-
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -133,6 +130,21 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <!-- Build an executable JAR -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -141,7 +153,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
+                            <classpathPrefix>libs/</classpathPrefix>
                             <mainClass>com.genne23v.openssg.App</mainClass>
                         </manifest>
                     </archive>

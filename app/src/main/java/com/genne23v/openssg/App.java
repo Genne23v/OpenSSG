@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class App {
-    private static final String OPTION_DESCRIPTION = "\nAvailable options:\n[-v | --version]\t\t\t\t\tDisplay program information\n[-h | --help]\t\t\t\t\t\tDisplay how to use options\n[-i | --input <file-or-folder>]\t\tSpecify input file or folder\n[-o | --output <folder-name>]\t\tSpecify output folder. Default is ./dist\n[-l | --lang <language-country>]\tSpecify language to add it to html tag\n[-c | --config <config-file>]\t\tSpecify a json file location that has options";
+    private static final String OPTION_DESCRIPTION = "\nAvailable options:\n[-v | --version]\t\t\tDisplay program information\n[-h | --help]\t\t\t\tDisplay how to use options\n[-i | --input <file-or-folder>]\t\tSpecify input file or folder\n[-o | --output <folder-name>]\t\tSpecify output folder. Default is ./dist\n[-l | --lang <language-country>]\tSpecify language to add it to html tag\n[-c | --config <config-file>]\t\tSpecify a json file location that has options";
     private static final String INPUT = "--input";
     private static final String OUTPUT = "--output";
     private static final String LANG = "--lang";
