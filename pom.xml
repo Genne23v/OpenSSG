@@ -6,7 +6,7 @@
 
     <groupId>io.github.genne23v</groupId>
     <artifactId>open-ssg</artifactId>
-    <version>0.9.3</version>
+    <version>0.9.4</version>
     <packaging>jar</packaging>
 
     <name>OpenSSG</name>
@@ -42,9 +42,31 @@
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <version>5.4.2</version>
-            <scope>test</scope>
+<!--            <scope>test</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.4.2</version>
+<!--            <scope>test</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+<!--            <scope>test</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
+            <version>0.17.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
         </dependency>
 
     </dependencies>
@@ -60,7 +82,6 @@
         </repository>
     </distributionManagement>
 
-
     <build>
         <plugins>
 
@@ -69,9 +90,30 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.6.1</version>
                 <configuration>
+                    <release>15</release>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>app</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -103,15 +145,28 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <show>public</show>
+                            <failOnError>false</failOnError>
+                            <detectOfflineLinks>false</detectOfflineLinks>
+                            <doclint>all,-missing</doclint>
+                            <nohelp>true</nohelp>
+                            <excludePackageNames>*.internal.*,testutil,demo</excludePackageNames>
+                            <quiet>true</quiet>
+                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -165,11 +220,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <!--
+        <junit-jupiter.version>5.4.2</junit-jupiter.version>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        -->
     </properties>
 
 </project>

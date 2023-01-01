@@ -78,7 +78,10 @@ public class ParsingUtilsTest {
         Assertions.assertEquals(expected, ParsingUtils.buildSidebar(files));
 
         files.add("./test/file1.md");
-        expected = "<div class=\"sidebar\"><ul>test<li><a href=\"./test/file1.html\">file1</a></li>\n<li><a href=\"./test/file.html\">file</a></li>\n</ul>\n</div>";
+        expected = "<div class=\"sidebar\"><ul>test<li><a href=\"./test/file.html\">file</a></li>\n" +
+                "<li><a href=\"./test/file1.html\">file1</a></li>\n" +
+                "</ul>\n" +
+                "</div>";
 
         Assertions.assertEquals(expected, ParsingUtils.buildSidebar(files));
 
