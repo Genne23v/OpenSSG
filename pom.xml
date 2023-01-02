@@ -6,7 +6,7 @@
 
     <groupId>io.github.genne23v</groupId>
     <artifactId>open-ssg</artifactId>
-    <version>0.9.4</version>
+    <version>0.9.10</version>
     <packaging>jar</packaging>
 
     <name>OpenSSG</name>
@@ -39,7 +39,6 @@
     </scm>
 
     <dependencies>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -68,7 +67,6 @@
             <artifactId>json-simple</artifactId>
             <version>1.1</version>
         </dependency>
-
     </dependencies>
 
     <distributionManagement>
@@ -84,7 +82,6 @@
 
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -208,13 +205,34 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <classpathPrefix>libs/</classpathPrefix>
+                            <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>com.genne23v.openssg.App</mainClass>
+<!--                            <classpathPrefix>dependency-jars/</classpathPrefix>-->
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>com.genne23v.openssg.App</mainClass>
+                        </transformer>
+                    </transformers>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
