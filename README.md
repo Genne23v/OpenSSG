@@ -3,13 +3,11 @@ OpenSSG is a static site generator to grep all text and markdown files in a desi
 
 And index.html file will be created to link all your generated html files. Each page also will have the auto-configured sidebar to navigate pages easily. Your text file will turn into complete website! You can also specify output folder, and it will generate html files in the same hierarchy from original folder. You can specify CSS files to add too. 
 
-## Installation
-1. JDK must be installed in your computer [JDK Download](https://www.oracle.com/java/technologies/downloads/). The current JDK version is `18.0.2.1`. <br />
-2. Add Maven dependency modules `com.googlecode.json-simple.json:1.1.1`, `org.commonmark:commonmark:0.17.1`
-3. Build and run in IDE
-
-If you want to run in terminal, create `/lib` folder and add dependency jar files to `/lib` folder. 
-Then, go to `/src` folder and compile the program by running `javac -cp ./libs/* OpenSSG.java FileUtilities.java Options.java ParsingUtils.java Release.java DOMNode.java` in command line.  
+## To Use OpenSSG
+- Go to https://search.maven.org/ and search `open-ssg`. Download the latest version and run `java -jar open-ssg-0.9.9.jar` with option.  
+- Or go to https://repo1.maven.org/maven2/io/github/genne23v/open-ssg/ and download the latest `jar` file. Run `java -jar open-ssg-0.9.9.jar` with option.
+- Make sure that JDK is installed in your machine. Download [HERE](https://www.oracle.com/java/technologies/downloads/). `18.0.2.1` is used in `OpenSSG`.
+- To contribute, please check out `CONTRIBUTING.md` document. 
 
 ## Usage
 Run `java OpenSSG -v` or `java OpenSSG --version` to check program information
@@ -46,14 +44,16 @@ Note that keys in the json are case sensitive. `input` `lang` `stylesheets` and 
 https://genne23v.github.io/sherlock-homes-selected-stories/
 
 ## Release
-| Version | Date           |
-|---------|----------------|
-| 0.4.0   | Oct, 26, 2022  |
-| 0.3.0   | Oct, 7, 2022   |
-| 0.2.0   | Sep, 22, 2022  |
-| 0.1.2   | Sep, 18, 2022  |
-| 0.1.1   | Sep, 16, 2022  |
-| 0.1.0   | Sep, 11, 2022  |
+| Version | Date          |
+|---------|---------------|
+| 0.9.9   | Jan, 2, 2023  |
+| 0.9.0   | Nov, 26, 2022 |
+| 0.4.0   | Oct, 26, 2022 |
+| 0.3.0   | Oct, 7, 2022  |
+| 0.2.0   | Sep, 22, 2022 |
+| 0.1.2   | Sep, 18, 2022 |
+| 0.1.1   | Sep, 16, 2022 |
+| 0.1.0   | Sep, 11, 2022 |
 
 
 
