@@ -6,7 +6,7 @@ And index.html file will be created to link all your generated html files. Each 
 ## To Use OpenSSG
 - Go to https://search.maven.org/ and search `open-ssg`. Download the latest version and run `java -jar open-ssg-0.9.9.jar` with option.  
 - Or go to https://repo1.maven.org/maven2/io/github/genne23v/open-ssg/ and download the latest `jar` file. Run `java -jar open-ssg-0.9.9.jar` with option.
-- Make sure that JDK is installed in your machine. Download [HERE](https://www.oracle.com/java/technologies/downloads/). `18.0.2.1` is used in `OpenSSG`.
+- Before running `jar` file, make sure that JDK is installed in your machine. Download [HERE](https://www.oracle.com/java/technologies/downloads/). `18.0.2.1` is used in `OpenSSG`.
 - To contribute, please check out `CONTRIBUTING.md` document. 
 
 ## Usage
@@ -14,7 +14,7 @@ Run `java OpenSSG -v` or `java OpenSSG --version` to check program information
 
 Run `java OpenSSG -h` or `java OpenSSG --help` to find the usage and how to use options
 
-`java OpenSSG -i <FILE OR FOLDER>` or `java OpenSSG --input <FILE OR FOLDER>` will generate `.html` file in `./dist` folder. If you specify a foldername, it will find all txt files and generate matching `.html` files in the same hierarchy to original folder. Quotes should be surrounded at the beginning and end of the file or folder name to avoid argument error.
+`java OpenSSG -i <FILE OR FOLDER>` or `java OpenSSG --input <FILE OR FOLDER>` will generate `.html` file in `./dist` folder. If you specify a folder name, it will find all txt files and generate matching `.html` files in the same hierarchy to original folder. Quotes should be surrounded at the beginning and end of the file or folder name to avoid argument error.
 
 `java OpenSSG -o <FOLDER NAME>` or `java OpenSSG --output <FOLDER NAME>` will override default folder and create a new folder to generate HTML files. If you want to add spaces in folder name, folder name should be surrounded by quotation marks. 
 
